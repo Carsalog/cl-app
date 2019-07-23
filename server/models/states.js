@@ -29,7 +29,7 @@ const state = new mongoose.Schema({
 
 state.statics.getById = function (_id) {
   /**
-   * Returns a car make by id
+   * Returns a state by id
    * @return Promise:
    */
   return this.findById(_id).populate("cities", "name").select("-__v");
@@ -37,10 +37,18 @@ state.statics.getById = function (_id) {
 
 state.statics.getByPage = function(page, amount) {
   /**
-   * Get list of makes by page/amount (pagination)
+   * Get list of states by page/amount (pagination)
    * @return Promise:
    */
   return this.find().skip((page - 1) * amount).limit(amount).sort({name: 1}).select("-__v -cities");
+};
+
+state.statics.getAll = function() {
+  /**
+   * Get list of states
+   * @return Promise:
+   */
+  return this.find();
 };
 
 state.statics.getByName = function (name) {
