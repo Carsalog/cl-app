@@ -1,10 +1,10 @@
 import React from "react";
 import {shallow} from "enzyme";
-import App from "../../App";
-import Router from "../../Router";
-import Nav from '../../components/Nav';
-import Footer from '../../components/Footer';
-import Message from '../../components/common/Message';
+import App from "../App";
+import Router from "../Router";
+import Nav from './Nav';
+import Footer from './Footer';
+import Message from './common/Message';
 
 
 describe("Tests for App", () => {

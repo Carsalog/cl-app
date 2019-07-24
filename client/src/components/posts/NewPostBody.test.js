@@ -1,8 +1,8 @@
 import React from "react";
 import {render} from "enzyme";
-import {store} from "../../../loader";
-import {NewPostBody} from "../../../components/posts/NewPostBody";
-import {getCar} from "../../utils";
+import {store} from "../../loader";
+import {NewPostBody} from "./NewPostBody";
+import {getCar} from "../../tests/utils";
 
 
 describe("NewPostBody", () => {

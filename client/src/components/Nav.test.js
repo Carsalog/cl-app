@@ -1,7 +1,7 @@
 import React from "react";
 import {shallow} from "enzyme";
-import Nav from '../../components/nav';
-import {UserNav} from '../../components/common/userNav';
+import Nav from './Nav';
+import {UserNav} from './common/UserNav';
 
 
 describe("Nav", () => {

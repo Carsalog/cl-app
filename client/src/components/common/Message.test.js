@@ -1,7 +1,7 @@
 import React from "react";
 import * as Adapter from 'enzyme-adapter-react-16';
 import {render} from "enzyme";
-import {Message} from "../../../components/common/Message";
+import {Message} from "./Message";
 
 
 describe("Message", () => {

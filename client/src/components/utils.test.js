@@ -1,5 +1,5 @@
-import {decodeUser} from "../../utils/tools";
-import {getToken, user} from "../utils";
+import {decodeUser} from "../utils/tools";
+import {getToken, user} from "../tests/utils";
 
 
 test("decode user", () => {

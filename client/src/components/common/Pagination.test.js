@@ -1,6 +1,6 @@
 import React from "react";
 import {render} from "enzyme";
-import Pagination from "../../../components/common/pagination";
+import Pagination from "./pagination";
 
 
 describe("Pagination", () => {

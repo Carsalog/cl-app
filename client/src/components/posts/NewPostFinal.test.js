@@ -1,8 +1,8 @@
 import React from "react";
 import {render} from "enzyme";
-import {store} from "../../../loader";
-import {NewPostFinal} from "../../../components/posts/NewPostFinal";
-import {getCar, getPost} from "../../utils";
+import {store} from "../../loader";
+import {NewPostFinal} from "./NewPostFinal";
+import {getCar, getPost} from "../../tests/utils";
 
 
 describe("NewPostFinal", () => {

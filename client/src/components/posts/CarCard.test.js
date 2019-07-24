@@ -1,7 +1,7 @@
 import React from "react";
 import {shallow} from "enzyme";
-import {CarCard} from "../../../components/posts/CarCard";
-import {getCar} from "../../utils";
+import {CarCard} from "./CarCard";
+import {getCar} from "../../tests/utils";
 
 
 describe("CarCard", () => {

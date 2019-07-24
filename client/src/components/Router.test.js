@@ -1,7 +1,7 @@
 import React from "react";
 import {Route, Switch} from "react-router-dom";
 import {shallow} from "enzyme";
-import Router from '../../Router';
+import Router from '../Router';
 
 
 describe("Router", () => {
