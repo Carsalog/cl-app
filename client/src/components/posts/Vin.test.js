@@ -1,9 +1,9 @@
 import React from "react";
 import {shallow} from "enzyme";
-import {store} from "../../../loader";
-import {Vin} from "../../../components/posts/Vin";
-import CarCard from "../../../components/posts/CarCard";
-import {getCar} from "../../utils";
+import {store} from "../../loader";
+import {Vin} from "./Vin";
+import CarCard from "./CarCard";
+import {getCar} from "../../tests/utils";
 
 
 describe("Vin", () => {

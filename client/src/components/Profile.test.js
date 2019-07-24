@@ -1,8 +1,8 @@
 import React from "react";
 import {Route, Switch} from "react-router-dom";
 import {shallow} from "enzyme";
-import {Profile} from '../../components/profile';
-import Sidebar from "../../components/profile/sidebar";
+import {Profile} from './Profile';
+import Sidebar from "./profile/Sidebar";
 
 describe("Profile", () => {
 

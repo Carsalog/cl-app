@@ -1,7 +1,7 @@
 import React from "react";
 import {render} from "enzyme";
-import Root from "../../Root";
-import {Login} from '../../components/Login';
+import Root from "../Root";
+import {Login} from './Login';
 
 
 describe("Login", () => {

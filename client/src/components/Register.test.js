@@ -1,7 +1,7 @@
 import React from "react";
 import {render} from "enzyme";
-import Root from "../../Root";
-import Register from '../../components/register';
+import Root from "../Root";
+import Register from './Register';
 
 
 describe("Register", () => {

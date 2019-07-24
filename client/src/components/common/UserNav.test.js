@@ -1,8 +1,8 @@
 import React from "react";
 import {shallow} from "enzyme";
-import {user} from "../../utils";
-import {UserNav} from "../../../components/common/userNav";
-import Icons from "../../../components/common/Icons";
+import {user} from "../../tests/utils";
+import {UserNav} from "./UserNav";
+import Icons from "./Icons";
 
 
 describe("UserNav", () => {

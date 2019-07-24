@@ -1,6 +1,6 @@
 import React from "react";
 import {shallow} from "enzyme";
-import {Posts} from '../../components/Posts';
+import {Posts} from './Posts';
 import {Switch, Route} from "react-router-dom";
 
 

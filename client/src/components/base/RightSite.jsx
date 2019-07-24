@@ -34,7 +34,7 @@ class RightSite extends PlaceInterface {
       this.setState({data});
     }
 
-    if (!states.length) this.props.onGetStates(`${urls.states}`);
+    if (!states.length) this.props.onGetStates(`${urls.states}?amount=60`);
   }
 
   doSubmit = () => this.props.history.push("/posts");

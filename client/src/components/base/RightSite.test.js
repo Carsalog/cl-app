@@ -1,9 +1,9 @@
 import React from "react";
-import Root from "../../../Root";
+import Root from "../../Root";
 import {render} from "enzyme";
-import RightSide from "../../../components/base/RightSite";
-import {store} from "../../../loader";
-import {GET_STATES} from "../../../actions/types";
+import RightSide from "./RightSite";
+import {store} from "../../loader";
+import {GET_STATES} from "../../actions/types";
 
 
 describe("RightSide", () => {

@@ -1,10 +1,10 @@
 import moxios from "moxios";
 import thunk from "redux-thunk";
 import configureMockStore from 'redux-mock-store';
-import http from "../../../services/http";
-import * as action from "../../../actions";
-import * as types from "../../../actions/types";
-import {store} from "../../../loader";
+import http from "../services/http";
+import * as action from "./index";
+import * as types from "./types";
+import {store} from "../loader";
 
 
 const mockStore = configureMockStore([thunk]);

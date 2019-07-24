@@ -1,12 +1,12 @@
 import React from "react";
 import {shallow} from "enzyme";
 import moxios from "moxios";
-import MyPosts from "../../../components/profile/MyPosts";
-import DisplayPosts from "../../../components/common/DisplayPosts";
-import Root from "../../../Root";
-import {store} from "../../../loader";
-import {SET_USER} from "../../../actions/types";
-import {getPost, user} from "../../utils";
+import MyPosts from "./MyPosts";
+import DisplayPosts from "../common/DisplayPosts";
+import Root from "../../Root";
+import {store} from "../../loader";
+import {SET_USER} from "../../actions/types";
+import {getPost, user} from "../../tests/utils";
 
 
 describe("MyPosts", () => {

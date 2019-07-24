@@ -1,7 +1,7 @@
 import React from "react";
 import {shallow} from "enzyme";
-import SubList from "../../../components/common/subList";
-import ItemsList from "../../../components/common/itemsList";
+import SubList from "./subList";
+import ItemsList from "./itemsList";
 
 
 describe("SubList", () => {
