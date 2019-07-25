@@ -5,7 +5,7 @@ import {getStates} from "../../actions";
 import {placeSchema} from "../common/schemas";
 
 
-class RightSite extends PlaceInterface {
+export class RightSite extends PlaceInterface {
 
   constructor(props) {
 
@@ -37,7 +37,7 @@ class RightSite extends PlaceInterface {
     if (!states.length) this.props.onGetStates(`${urls.states}?amount=60`);
   }
 
-  doSubmit = () => this.props.history.push("/posts");
+  doSubmit = () => this.props.history.push(this.props.urls.posts);
 
 
   render () {
@@ -53,7 +53,7 @@ class RightSite extends PlaceInterface {
   }
 }
 
-function mapStateToProps(state) {
+export function mapStateToProps(state) {
   return {
     state: state.state,
     states: state.states,
@@ -63,9 +63,12 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  dispatch => ({
+export function mapDispatchToProps(dispatch) {
+  return {
     onGetStates: url => dispatch(getStates(url))
-  })
+  }
+}
+
+export default connect(
+  mapStateToProps, mapDispatchToProps
 )(RightSite);
