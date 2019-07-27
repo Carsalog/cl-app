@@ -2,7 +2,7 @@ import React from 'react';
 import UserNav from './common/UserNav';
 import {Link} from 'react-router-dom';
 
-class Nav extends  React.Component {
+export class Nav extends  React.Component {
 
   state = { navBar: true };
 
