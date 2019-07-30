@@ -1,254 +1,356 @@
 import moxios from "moxios";
 import thunk from "redux-thunk";
 import configureMockStore from 'redux-mock-store';
-import http from "../services/http";
-import * as action from "./index";
 import * as types from "./types";
-import {store} from "../loader";
+import * as actions from './index';
+import http from '../services/http';
 
-
-const mockStore = configureMockStore([thunk]);
 
 describe("actions", () => {
 
-  let base, urls, mStore;
-  const setMock = (url, res) => moxios.stubRequest(url, {status: 200, response: res});
+  let url, action, expectedActions, data;
+  const createMockStore = configureMockStore([thunk]);
+  const mockStore = createMockStore({});
 
-  beforeEach(done => {
+  const setMock = () => {
+    moxios.stubRequest(url, {
+      status: 200,
+      response: data
+    });
+    mockStore.dispatch(action(url));
+  };
 
-    const state = store.getState();
-    base = state.config.base;
-    urls = state.config.urls;
+  const check = done => moxios.wait(() => {
+    expect(mockStore.getActions()).toMatchObject(expectedActions);
+    done();
+  });
 
-    mStore = mockStore(store.getState());
+  beforeAll(() => {
+    http.setBaseURL();
+  });
 
+  beforeEach(() => {
     moxios.install();
-    done();
+    data = [1, 2, 3];
   });
 
-  afterEach(done => {
+  afterEach(() => {
     moxios.uninstall();
-    done();
+    mockStore.clearActions();
+
+    url = '';
+    action = null;
+    expectedActions = null;
   });
 
-  it("checks that checkEmail return correct response", done => {
-    const email = "mock@email.com";
-    setMock(`${base}${urls.users}/${email}`, true);
-    moxios.wait(async () => {
-      expect(action.checkEmail(email)).toBeTruthy();
-      done();
-    });
+  it(`should remove message from the store`, done => {
+    action = actions.delMessage;
+    url = '/messages';
+    data = null;
+    expectedActions = [{type: types.DEL_MESSAGE, payload: data}];
+
+    setMock();
+
+    return check(done);
   });
 
-  it(`should return action - type: ${types.DEL_MESSAGE} and payload: null`, () => {
-    expect(mStore.dispatch(action.delMessage()))
-      .toEqual({type: types.DEL_MESSAGE, payload: null});
+  it(`should update confirms in the store`, () => {
+    action = actions.updateZipConfirm;
+    expectedActions = [{type: types.UPDATE_CONFIRMS, payload: true}];
+    expect(mockStore.dispatch(action(true)))
+      .toEqual(expectedActions[0]);
   });
 
-  it(`should return action - type: ${types.UPDATE_CONFIRMS} and payload: true`, () => {
-    expect(mStore.dispatch(action.updateZipConfirm(true)))
-      .toEqual({type: types.UPDATE_CONFIRMS, payload: true});
-  });
+  it(`should sdd cities to the store`, done => {
+    action = actions.getCities;
+    url = `/api/cities`;
+    expectedActions = [{type: types.GET_CITIES, payload: data}];
+    setMock();
 
-  it(`should return action - type: ${types.GET_CITIES} and payload: [1, 2, 3]`, async done => {
-    const url = `${base}${urls.cities}`;
-    setMock(url, [1, 2, 3]);
-
-    await mStore.dispatch(action.getCities(url));
-    moxios.wait(async () => {
-      expect(mStore.getActions())
-        .toEqual([{type: types.GET_CITIES, payload: [1, 2, 3]}]);
-      done();
-    });
+    return check(done);
   });
 
   it("should return action undefended if backend send error from /api/cities", async done => {
-    const url = `${base}${urls.cities}`;
-    setMock(url, null);
+    action = actions.getCities;
+    url = `/api/cities`;
+    data = null;
+    expectedActions = [{type: types.GET_CITIES, payload: data}];
+    setMock();
 
-    await mStore.dispatch(action.getCities(url));
+
     moxios.wait(async () => {
-      expect(mStore.getActions()).toEqual([]);
+      expect(mockStore.getActions()).toEqual([]);
       done();
     });
   });
 
-  it(`should return action - type: ${types.GET_MAKES} and payload: [1, 2, 3]`, async done => {
-    const url = `${base}${urls.makes}`;
-    setMock(url, [1, 2, 3]);
+  it('should set make to the store', done => {
+    const _id = '123';
+    const url = `/api/make/${_id}`;
+    action = actions.getMake;
+    data = {_id: _id};
+    expectedActions = [{type: types.SET_MAKE, payload: data}];
 
-    await mStore.dispatch(action.getMakes(url));
-    moxios.wait(async () => {
-      expect(mStore.getActions())
-        .toEqual([{type: types.GET_MAKES, payload: [1, 2, 3]}]);
-      done();
+    setMock(url, data);
+
+    return check(done)
+  });
+
+  it(`should set makes to the store`, done => {
+    action = actions.getMakes;
+    url = '/api/makes';
+    expectedActions = [{type: types.GET_MAKES, payload: data}];
+
+    setMock();
+
+    return check(done);
+  });
+
+  it("should add transmissions to the store", done => {
+    action = actions.getTransmissions;
+    url = '/api/transmissions';
+    expectedActions = [{type: types.SET_TRANSMISSIONS, payload: data}];
+
+    setMock();
+
+    return check(done);
+  });
+
+  it(`should add post to the store`, async done => {
+    url = `/api/posts/1`;
+    action = actions.getPost;
+    data = {_id: "1"};
+    expectedActions = [{type: types.GET_POST, payload: data}];
+    setMock();
+
+    return check(done);
+  });
+
+  it(`should add posts to the store`, async done => {
+    url = `/api/posts`;
+    action = actions.getPosts;
+    expectedActions = [{type: types.GET_POSTS, payload: data}];
+    setMock();
+
+    return check(done);
+  });
+
+  it('should delete post', function () {
+    url = '/post/1';
+    data = {info: "post 1 was removed"};
+    moxios.stubRequest(url, {
+      status: 200,
+      response: data
+    });
+
+    return actions.removePost(url).then(res => {
+      expect(res.data).toMatchObject(data);
+    })
+  });
+
+  it(`should add users posts to the store`, done => {
+    url = `/api/posts/by/user/1`;
+    data = [{_id: "1"}, {_id: "3"}, {_id: "8"}];
+    action = actions.getUsersPosts;
+    expectedActions = [{type: types.GET_MY_POSTS, payload: data}];
+    setMock();
+
+    return check(done);
+  });
+
+  it(`should add states to the store`, done => {
+    url = `/api/posts/by/user/1`;
+    data = [{_id: "1"}, {_id: "2"}, {_id: "4"}];
+    action = actions.getStates;
+    expectedActions = [{type: types.GET_STATES, payload: data}];
+    setMock();
+
+    return check(done);
+  });
+
+  it(`should set car to the store`, done => {
+    url = `/api/posts/by/user/1`;
+    data = {_id: "23", vin: "d62ml34gf4d34s"};
+    action = actions.getCar;
+    expectedActions = [{type: types.SET_CAR, payload: data}];
+    setMock();
+
+    return check(done);
+  });
+
+  it("should return correct tag", () => {
+    url = '/tags/25';
+    data = {_id: "25"};
+    moxios.stubRequest(url, {
+      status: 200,
+      response: data
+    });
+
+    return actions.getTag(url).then(res => {
+      expect(res.data).toMatchObject(data);
+    })
+  });
+
+  it("should return correct state", () => {
+    url = '/states/18';
+    data = {_id: "18"};
+    moxios.stubRequest(url, {
+      status: 200,
+      response: data
+    });
+
+    return actions.getState(url).then(res => {
+      expect(res.data).toMatchObject(data);
     });
   });
 
-  it("should return action undefended if backend send error from /api/makes", async done => {
-    const url = `${base}${urls.makes}`;
-    setMock(url, null);
+  it("should return correct update post", () => {
+    url = '/posts/1';
+    data = {_id: "1", description: "description"};
+    moxios.stubRequest(url, {
+      status: 200,
+      response: data
+    });
 
-    await mStore.dispatch(action.getMakes(url));
-    moxios.wait(async () => {
-      expect(mStore.getActions()).toEqual([]);
-      done();
+    return actions.updatePost(url, data).then(res => {
+      expect(res.data).toMatchObject(data);
     });
   });
 
-  it(`should return action - type: ${types.GET_POST} and payload: {_id: "1"}`, async done => {
-    const url = `${base}${urls.posts}/1`;
-    setMock(url, {_id: "1"});
+  it("should return correct create post", () => {
+    url = '/posts';
+    const description = "new post";
+    data = {_id: "33", description: description};
+    moxios.stubRequest(url, {
+      status: 200,
+      response: data
+    });
 
-    await mStore.dispatch(action.getPost(url));
-    moxios.wait(async () => {
-      expect(mStore.getActions())
-        .toEqual([{type: types.GET_POST, payload: {_id: "1"}}]);
-      done();
+    return actions.createPost(url, description).then(res => {
+      expect(res.data).toMatchObject(data);
     });
   });
 
-  it("should return action undefended if backend send error from /api/posts/:id", async done => {
-    const url = `${base}${urls.posts}/1`;
-    setMock(url, null);
+  it("should add user to the store", done => {
+    url = '/user';
+    action = actions.getUser;
+    data = {_id: "82", firstName: "John"};
+    expectedActions = [{type: types.SET_USER, payload: data}];
 
-    await mStore.dispatch(action.getPost(url));
-    moxios.wait(async () => {
-      expect(mStore.getActions()).toEqual([]);
-      done();
-    });
+    setMock();
+
+    return check(done);
   });
 
-  it(`should return action - type: ${types.GET_POSTS} and payload: [1, 2, 3]`, async done => {
-    const url = `${base}${urls.posts}`;
-    setMock(url, [1, 2, 3]);
+  it('should add token to the store', done => {
+    url = '/auth';
+    action = actions.authUser;
+    data = {token: '12345'};
+    expectedActions = [{type: types.SET_TOKEN, payload: data.token}];
 
-    await mStore.dispatch(action.getPosts(url));
-    moxios.wait(async () => {
-      expect(mStore.getActions())
-        .toEqual([{type: types.GET_POSTS, payload: [1, 2, 3]}]);
-      done();
-    });
+    setMock();
+
+    return check(done);
   });
 
-  it("should return action undefended if backend send error from /api/posts", async done => {
-    const url = `${base}${urls.posts}`;
-    setMock(url, null);
+  it('should not add token to the store if server return an error', done => {
+    url = '/auth';
+    action = actions.authUser;
+    data = null;
+    expectedActions = [];
 
-    await mStore.dispatch(action.getPosts(url));
-    moxios.wait(() => {
-      expect(mStore.getActions()).toEqual([]);
-      done();
-    });
+    setMock();
+
+    return check(done);
   });
 
-  it(`should return action - type: ${types.GET_STATES} and payload: [1, 2, 3]`, async done => {
-    const url = `${base}${urls.states}`;
-    setMock(url, [1, 2, 3]);
+  it('should add zip data to the store', done => {
+    url = '/zip';
+    action = actions.getZip;
+    data = {
+      zip: {_id: '123'},
+      state: {_id: '456'},
+      city: {_id: '789'}
+    };
+    expectedActions = [
+      {type: types.GET_ZIP, payload: data},
+      {type: types.SET_STATE, payload: data.state},
+      {type: types.SET_CITY, payload: data.city}
+    ];
 
-    await mStore.dispatch(action.getStates(url));
-    moxios.wait(async () => {
-      expect(mStore.getActions())
-        .toEqual([{type: types.GET_STATES, payload: [1, 2, 3]}]);
-      done();
-    });
+    setMock();
+
+    return check(done);
   });
 
-  it("should return action undefended if backend send error from /api/states", async done => {
-    const url = `${base}${urls.states}`;
-    setMock(url, null);
+  it('should not add zip data to the store', done => {
+    url = '/zip';
+    action = actions.getZip;
+    data = null;
+    expectedActions = [];
 
-    await mStore.dispatch(action.getStates(url));
-    moxios.wait(async () => {
-      expect(mStore.getActions()).toEqual([]);
-      done();
-    });
+    setMock();
+
+    return check(done);
   });
 
-  it(`should return user object`, async done => {
-
-    // setMock(`${base}${urls.users}/me`, {_id: "1", name: "john"});
-
-    moxios.wait(async () => {
-      const req = moxios.requests.mostRecent();
-      req.respondWith({status: 200, response: {_id: "1", name: "john"}})
-    });
-
-    const res = await action.getUser();
-
-    expect(res.data).toEqual({_id: "1", name: "john"});
-    done();
-  });
-
-  it(`should return action - type: ${types.GET_ZIP} and payload`, async done => {
-    const url = `${base}${urls.zips}`;
-    setMock(url, {_id: "1", state: "3", city: "8"});
-
-
-    const expectedResponse = [{
-      "payload": {"_id": "1", "city": "8", "state": "3"},
-      "type": types.GET_ZIP},
-      {
-        "payload": "3",
-        "type": types.SET_STATE
-      },
-      {"payload": "8", "type": types.SET_CITY}];
-
-    await mStore.dispatch(action.getZip(url));
-    moxios.wait(async () => {
-      expect(mStore.getActions()).toEqual(expectedResponse);
-      done();
-    });
-  });
-
-  it("should return action undefended if backend send error from /api/zips", async done => {
-    const url = `${base}${urls.zips}`;
-    setMock(url, null);
-
-    await mStore.dispatch(action.getZip(url));
-    moxios.wait(async () => {
-      expect(mStore.getActions()).toEqual([]);
-      done();
-    });
-  });
-
-  it(`should return action - type: ${types.SET_CITY} and payload: {_id: "1"}`, () => {
-    expect(mStore.dispatch(action.setCity({_id: "1"})))
+  it(`should return action SET_CITY`, () => {
+    expect(mockStore.dispatch(actions.setCity({_id: "1"})))
       .toEqual({type: types.SET_CITY, payload: {_id: "1"}});
   });
 
-  it(`should return action - type: ${types.SET_MAKE} and payload: {_id: "1"}`, () => {
-    expect(mStore.dispatch(action.setMake({_id: "1"})))
+  it(`should return action SET_MAKE`, () => {
+    expect(mockStore.dispatch(actions.setMake({_id: "1"})))
       .toEqual({type: types.SET_MAKE, payload: {_id: "1"}});
   });
 
-  it(`should return action - type: ${types.SET_MESSAGE} and payload: {error: "message"}`, () => {
-    expect(mStore.dispatch(action.setMessage({error: "message"})))
+  it(`should return action SET_MESSAGE`, () => {
+    expect(mockStore.dispatch(actions.setMessage({error: "message"})))
       .toEqual({type: types.SET_MESSAGE, payload: {error: "message"}});
   });
 
-  it(`should return action - type: ${types.SET_MODEL} and payload: {_id: "1"}`, () => {
-    expect(mStore.dispatch(action.setModel({_id: "1"})))
+  it(`should return action SET_MODEL`, () => {
+    expect(mockStore.dispatch(actions.setModel({_id: "1"})))
       .toEqual({type: types.SET_MODEL, payload: {_id: "1"}});
   });
 
-  it(`should return action - type: ${types.SET_POST} and payload: {_id: "1"}`, () => {
-    expect(mStore.dispatch(action.setPost({_id: "1"})))
+  it(`should return action SET_POST`, () => {
+    expect(mockStore.dispatch(actions.setPost({_id: "1"})))
       .toEqual({type: types.SET_POST, payload: {_id: "1"}});
   });
 
-  it(`should return action - type: ${types.SET_STATE} and payload: {_id: "1"}`, () => {
-    expect(mStore.dispatch(action.setState({_id: "1"})))
+  it(`should return action SET_STATE`, () => {
+    expect(mockStore.dispatch(actions.setState({_id: "1"})))
       .toEqual({type: types.SET_STATE, payload: {_id: "1"}});
   });
 
-  it(`should return action - type: ${types.SET_TOKEN} and payload: "token"`, () => {
-    expect(mStore.dispatch(action.setToken("token")))
+  it(`should return action SET_TOKEN`, () => {
+    expect(mockStore.dispatch(actions.setToken("token")))
       .toEqual({type: types.SET_TOKEN, payload: "token"});
   });
 
-  it(`should return action - type: ${types.SET_USER} and payload: {_id: "1", name: "John"}`, () => {
-    expect(mStore.dispatch(action.setUser({_id: "1", name: "John"})))
+  it(`should return action SET_USER`, () => {
+    expect(mockStore.dispatch(actions.setUser({_id: "1", name: "John"})))
       .toEqual({type: types.SET_USER, payload: {_id: "1", name: "John"}});
+  });
+
+  it(`should return action SET_CITIES`, () => {
+    expect(mockStore.dispatch(actions.setCities([1, 2, 3])))
+      .toEqual({type: types.SET_CITIES, payload: [1, 2, 3]});
+  });
+
+  it(`should return action SET_CAR`, () => {
+    expect(mockStore.dispatch(actions.setCar({_id: "321", vin: "123"})))
+      .toEqual({type: types.SET_CAR, payload: {_id: "321", vin: "123"}});
+  });
+
+  it(`should return action ADD_TAG`, () => {
+    expect(mockStore.dispatch(actions.addTag({_id: "21"})))
+      .toEqual({type: types.ADD_TAG, payload: {_id: "21"}});
+  });
+
+  it(`should return action SET_MY_POSTS`, () => {
+    expect(mockStore.dispatch(actions.setMyPosts([1, 2, 3, 4])))
+      .toEqual({type: types.SET_MY_POSTS, payload: [1, 2, 3, 4]});
   });
 });

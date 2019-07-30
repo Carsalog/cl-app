@@ -3,6 +3,9 @@ import {store} from "../loader";
 import ErrorHandler from "./errorsHandlers";
 
 const errorHandler = new ErrorHandler(store);
+function setJwt (jwt) {
+  axios.defaults.headers.common["x-auth-token"] = jwt;
+}
 
 const setBaseURL = url => axios.defaults.baseURL = url;
 
@@ -16,5 +19,6 @@ export default {
   patch: axios.patch,
   delete: axios.delete,
   create: axios.create,
-  setBaseURL
+  setBaseURL,
+  setJwt
 };

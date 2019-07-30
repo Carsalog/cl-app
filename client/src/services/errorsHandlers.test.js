@@ -32,10 +32,10 @@ describe('errorsHandlers', () => {
   });
 
   it('should add server error to the store', function () {
-    const err = {data: "test server error message"};
+    const err = {data: {error: "test server error message"}};
     action = {
       type: types.SET_MESSAGE,
-      payload: {error: err.data}
+      payload: err.data
     };
 
     errorHandler.handleServerMessage(err);
