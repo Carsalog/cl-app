@@ -1,77 +1,40 @@
 import http from "../services/http";
-import {store} from "../loader";
 import * as types from "./types";
 
 
-export const checkEmail = email => http.get(`${(store.getState()).config.urls.users}/${email}`);
-
-export const delMessage =  () => dispatch => dispatch({type: types.DEL_MESSAGE, payload: null});
-
-export const updateZipConfirm = confirms => dispatch => dispatch({type: types.UPDATE_CONFIRMS, payload: confirms});
-
-export const getCities = url => dispatch => {
-  http.get(url).then(res => {
-    if (res && res.data) dispatch({type: types.GET_CITIES, payload: res.data});
+const get = (url, dispatch, type) => http.get(url)
+  .then(res => {
+    if (res && res.data)
+      return dispatch({type: type, payload: res.data});
+    else return null;
   });
-};
 
-export const getMake = url => dispatch => {
-  http.get(url).then(res => {
-    if (res && res.data) dispatch({type: types.SET_MAKE, payload: res.data});
-  });
-};
+export const delMessage = () => dispatch => dispatch({type: types.DEL_MESSAGE, payload: null});
 
-export const getMakes = url => dispatch => {
-  http.get(url).then(res => {
-    if (res && res.data) dispatch({type: types.GET_MAKES, payload: res.data});
-  });
-};
+export const updateZipConfirm = confirms => dispatch => dispatch({
+  type: types.UPDATE_CONFIRMS,
+  payload: confirms
+});
 
-export const getTransmissions = url => dispatch => {
-  http.get(url).then(res => {
-    if (res && res.data) {
-      const transmissions = res.data.map(x => {
-        const trns = {...x};
-        trns.name = x.type;
-        delete trns.type;
-        return trns;
-      });
-      dispatch({type: types.SET_TRANSMISSIONS, payload: transmissions});
-    }
-  });
-};
+export const getCities = url => dispatch => get(url, dispatch, types.GET_CITIES);
 
-export const getPost = url => dispatch => {
-  http.get(url).then(res => {
-    if (res && res.data) dispatch({type: types.GET_POST, payload: res.data});
-  });
-};
+export const getMake = url => dispatch => get(url, dispatch, types.SET_MAKE);
+
+export const getMakes = url => dispatch => get(url, dispatch, types.GET_MAKES);
+
+export const getTransmissions = url => dispatch => get(url, dispatch, types.SET_TRANSMISSIONS);
+
+export const getPost = url => dispatch => get(url, dispatch, types.GET_POST);
 
 export const removePost = url => http.delete(url);
 
-export const getPosts = url => dispatch => {
-  http.get(url).then(res => {
-    if (res && res.data) dispatch({type: types.GET_POSTS, payload: res.data});
-  });
-};
+export const getPosts = url => dispatch => get(url, dispatch, types.GET_POSTS);
 
-export const getUsersPosts = url => dispatch => {
-  http.get(url).then(res => {
-    if (res && res.data) dispatch({type: types.GET_MY_POSTS, payload: res.data});
-  });
-};
+export const getUsersPosts = url => dispatch => get(url, dispatch, types.GET_MY_POSTS);
 
-export const getStates = url => dispatch => {
-  http.get(url).then(res => {
-    if (res && res.data) dispatch({type: types.GET_STATES, payload: res.data});
-  });
-};
+export const getStates = url => dispatch => get(url, dispatch, types.GET_STATES);
 
-export const getCar = url => dispatch => {
-  http.get(url).then(res => {
-    if (res && res.data) dispatch({type: types.SET_CAR, payload: res.data});
-  });
-};
+export const getCar = url => dispatch => get(url, dispatch, types.SET_CAR);
 
 export const getTag = url => http.get(url);
 
@@ -81,14 +44,26 @@ export const updatePost = (url, post) => http.patch(url, post);
 
 export const createPost = (url, data) => http.post(url, data);
 
-export const getUser = () => http.get(`${store.getState().config.urls.users}/me`);
+export const getUser = url => dispatch => get(url, dispatch, types.SET_USER);
+
+export const authUser = (url, credentials) => dispatch => http.post(url, credentials)
+  .then(res => {
+    if (res && res.data && res.data.token) {
+      http.setJwt(res.data.token);
+      dispatch({type: types.SET_TOKEN, payload: res.data.token});
+      return res.data.token;
+    } else return null;
+  });
 
 export const getZip = url => dispatch => {
-  http.get(url).then(res => {if (res && res.data) {
+  http.get(url).then(res => {
+    if (res && res.data) {
       dispatch({type: types.GET_ZIP, payload: res.data});
       dispatch({type: types.SET_STATE, payload: res.data.state});
       dispatch({type: types.SET_CITY, payload: res.data.city});
-    }});};
+    }
+  });
+};
 
 export const setCity = city => dispatch => dispatch({type: types.SET_CITY, payload: city});
 
@@ -98,7 +73,7 @@ export const setMessage = message => dispatch => dispatch({type: types.SET_MESSA
 
 export const setModel = model => dispatch => dispatch({type: types.SET_MODEL, payload: model});
 
-export const setPost =  post => dispatch => dispatch({type: types.SET_POST, payload: post});
+export const setPost = post => dispatch => dispatch({type: types.SET_POST, payload: post});
 
 export const setState = state => dispatch => dispatch({type: types.SET_STATE, payload: state});
 
