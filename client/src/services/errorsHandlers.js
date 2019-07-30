@@ -21,7 +21,7 @@ class ErrorHandler {
      * Set server error message, if status code 404
      * redirect user to not found page
      */
-    this.store.dispatch({type: SET_MESSAGE, payload: {error: e.data}});
+    this.store.dispatch({type: SET_MESSAGE, payload: {error: e.data.error}});
   };
 
   handleBadRequestError = e => {
