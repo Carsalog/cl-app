@@ -76,6 +76,7 @@ class Form extends Component {
   };
 
   validatePasswords = (input, errors) => {
+
     const {password, passwordConf} = this.state.data;
     const equal = password !== passwordConf;
     const passwordError = input.name === "password" && passwordConf.length && equal;
@@ -114,13 +115,19 @@ class Form extends Component {
     );
   }
 
-  renderLink = (label, url, onClick = () => {
-  }) =>
-    (<Link to={url} className="text-uppercase link-gray" onClick={onClick} id={label}>{label}</Link>);
+  renderLink = (label, url, onClick = () => {}) => (<Link
+    to={url}
+    className="text-uppercase link-gray"
+    onClick={onClick}
+    id={label}>{label}</Link>);
 
-  renderInput(name, label, type = "text", af = false,
-              onBlur = () => {
-              }, onChange = null, inputClasses = null) {
+  renderInput(name, label,
+              type = "text",
+              af = false,
+              onBlur = () => {},
+              onChange = null,
+              inputClasses = null) {
+
     const {data, errors} = this.state;
     let classes, handleChange, error = errors[name];
 
