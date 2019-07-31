@@ -1,8 +1,8 @@
 import React from "react";
 import {shallow} from "enzyme";
 import {Link} from 'react-router-dom';
-import Footer from './Footer';
-import Social from './footer/Social';
+import Footer from './index';
+import Social from './Social';
 
 
 describe("Footer", () => {
