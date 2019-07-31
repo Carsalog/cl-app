@@ -1,20 +1,24 @@
-import React from "react";
-import {shallow} from "enzyme";
-import {Link} from 'react-router-dom';
+import React from 'react';
+import {shallow} from 'enzyme';
 import {Social} from './Social';
-import {store} from "../../loader";
 
 
 describe("Social", () => {
 
-  let component;
+  const props = {
+    social: [
+      {_id: '1'},
+      {_id: '2'},
+    ]
+  };
+  const social = shallow(<Social {...props}/>);
 
-  beforeAll(() => {
-    component = shallow(<Social config={store.getState().config}/>);
+  it('should render properly', function () {
+    expect(social).toMatchSnapshot();
   });
 
-  it("checks that Social component contains social links", () => {
-    expect(component.find(Link).length)
-      .toBe(store.getState().config.social.length);
+  it('should contains IconLink component', function () {
+    expect(social.find('IconLink').length)
+      .toBe(props.social.length);
   });
 });
