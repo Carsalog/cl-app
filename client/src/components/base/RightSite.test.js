@@ -16,7 +16,7 @@ describe('RightSide', () => {
       posts: '/posts'
     },
     history: {
-      push: jest.fn()``
+      push: jest.fn()
     },
     onGetStates: jest.fn()
   };
