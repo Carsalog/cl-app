@@ -9,7 +9,6 @@ export class UserNav extends Component {
 
   render() {
     const {user} = this.props;
-    console.log(user);
     if (user) return (
       <React.Fragment>
         <NavLink path="/profile"
