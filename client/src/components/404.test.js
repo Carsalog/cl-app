@@ -1,20 +1,13 @@
 import React from "react";
 import {shallow} from "enzyme";
-import NotFound from '../../components/404';
-import {Link} from "react-router-dom";
+import {NotFound} from './NotFound';
 
 
 describe("NotFound", () => {
 
-  let component;
+  const notFound = shallow(<NotFound />);
 
-  beforeAll(() => {
-    component = shallow(<NotFound />);
+  it("should render properly", () => {
+    expect(notFound).toMatchSnapshot();
   });
-
-
-  it("checks that NotFound contains Links", () => {
-    expect(component.find(Link).length).toBeTruthy();
-  });
-
 });

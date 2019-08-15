@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import SearchForm from "../components/common/SearchForm";
 
 
-const NotFound = props => {
+export const NotFound = props => {
 
   const back = () => props.history.goBack();
 
