@@ -29,7 +29,7 @@ class ErrorHandler {
      * Handle bad request status codes (4xx)
      */
     if (e && e.data) this.handleServerMessage(e);
-    else this.handleError(this.store.getState().config.errors.connection);
+    else this.handleError(this.store.getState().config.messages.connection);
   };
 
   errorHandle = e => {
@@ -42,7 +42,7 @@ class ErrorHandler {
      */
 
     const err = e.response && e.response.status >= 400 && e.response.status < 500;
-    if (!err) this.handleError(this.store.getState().config.errors.connection);
+    if (!err) this.handleError(this.store.getState().config.messages.connection);
     else this.handleBadRequestError(e.response);
 
     return null;
