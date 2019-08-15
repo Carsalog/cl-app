@@ -10,7 +10,7 @@ describe('errorsHandlers', () => {
   const createMockStore = configureMockStore([thunk]);
   const state = {
     config: {
-      errors: {
+      messages: {
         connection: "test error message"
       }
     }
@@ -27,7 +27,7 @@ describe('errorsHandlers', () => {
       type: types.SET_MESSAGE,
       payload: {error: "test error message"}
     };
-    errorHandler.handleError(state.config.errors.connection);
+    errorHandler.handleError(state.config.messages.connection);
     expect(mockStore.getActions()).toMatchObject([action]);
   });
 
@@ -58,7 +58,7 @@ describe('errorsHandlers', () => {
       // server doesn't return response or empty response
       errorHandler.handleBadRequestError(undefined);
       expect(errorHandler.handleError)
-        .toHaveBeenCalledWith(state.config.errors.connection);
+        .toHaveBeenCalledWith(state.config.messages.connection);
       expect(errorHandler.handleServerMessage)
         .not.toHaveBeenCalled();
 
@@ -80,7 +80,7 @@ describe('errorsHandlers', () => {
       errorHandler.errorHandle({});
 
       expect(errorHandler.handleError)
-        .toHaveBeenCalledWith(state.config.errors.connection);
+        .toHaveBeenCalledWith(state.config.messages.connection);
     });
 
     it('should call handleBadRequestError', function () {
