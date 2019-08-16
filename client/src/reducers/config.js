@@ -12,6 +12,7 @@ const conf = {
     models: "/models",
     cars: "/cars",
     zips: "/zips",
+    profile: "/profile/me",
     tags: "/tags"
   },
   provider: {
