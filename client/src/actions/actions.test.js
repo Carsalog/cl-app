@@ -43,17 +43,6 @@ describe("actions", () => {
     expectedActions = null;
   });
 
-  it(`should remove message from the store`, done => {
-    action = actions.delMessage;
-    url = '/messages';
-    data = null;
-    expectedActions = [{type: types.DEL_MESSAGE, payload: data}];
-
-    setMock();
-
-    return check(done);
-  });
-
   it(`should update confirms in the store`, () => {
     action = actions.updateZipConfirm;
     expectedActions = [{type: types.UPDATE_CONFIRMS, payload: true}];
