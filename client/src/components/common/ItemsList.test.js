@@ -4,24 +4,21 @@ import ItemsList from "./itemsList";
 
 
 describe("ItemsList", () => {
-  let component, items;
+  const items = [
+    {_id: "1", name: "name 1"},
+    {_id: "2", name: "name 2"},
+    {_id: "3", name: "name 3"},
+  ];
+  const onItemSelect = jest.fn();
 
-  beforeEach(() => {
-    items = [
-      {_id: "1", name: "name 1"},
-      {_id: "2", name: "name 2"},
-      {_id: "3", name: "name 3"},
-    ];
+  const itemList = shallow(<ItemsList items={items} onItemSelect={onItemSelect} currentItem={null} />);
 
+
+  it('should render properly', function () {
+    expect(itemList).toMatchSnapshot();
   });
 
-  it("Make sure that ItemsList display all passed items", () => {
-    component = shallow(<ItemsList items={items} onItemSelect={jest.fn()} currentItem={null} />);
-    expect(component.find("li").length).toBe(3);
-  });
-
-  it("Make sure that ItemsList display all passed items", () => {
-    component = shallow(<ItemsList items={items} onItemSelect={jest.fn()} currentItem={items[0]} />);
-    expect(component.find("li").length).toBe(3);
+  it('should contains Item component', () => {
+    expect(itemList.find('Item').length).toBe(items.length);
   });
 });

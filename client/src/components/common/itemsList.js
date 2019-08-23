@@ -1,4 +1,5 @@
 import React from 'react';
+import Item from './Item';
 
 
 const ItemsList = props => {
@@ -6,12 +7,11 @@ const ItemsList = props => {
 
   return (
     <ul className="list-group mb-3">
-      {items.map(item =>
-        <li
-          className={currentItem && item[property] === currentItem[property] ? "pointer list-group-item active" : "pointer list-group-item"}
-          key={item[property]}
-          onClick={() => onItemSelect(item)}
-        >{item.name}</li>)}
+      {items.map(item => <Item
+        key={item._id}
+        currentItem={currentItem}
+        item={item}
+        property={property} onItemSelect={onItemSelect}/>)}
     </ul>
   );
 };

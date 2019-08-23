@@ -9,8 +9,6 @@ const get = (url, dispatch, type) => http.get(url)
     else return null;
   });
 
-export const delMessage = () => dispatch => dispatch({type: types.DEL_MESSAGE, payload: null});
-
 export const updateZipConfirm = confirms => dispatch => dispatch({
   type: types.UPDATE_CONFIRMS,
   payload: confirms
