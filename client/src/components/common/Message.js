@@ -1,47 +1,40 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {delMessage} from '../../actions';
+import {setMessage} from '../../actions';
 
 
 export class Message extends Component {
 
   render() {
 
-    const {message} = this.props;
+    return (
+      <div className="container">
+        {this.props.message && (
+          <div className={`alert alert-${this.props.message.type} alert-dismissible fade show mt-5`} role="alert">
+            <strong>{this.props.message.type}</strong> {this.props.message.message}
+            <button type="button"
+                    className="close"
+                    data-dismiss="alert"
+                    aria-label="Close" onClick={this.props.onCleanMessage}>
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  }
+}
 
-    const Alert = () => {
-      let type = "", alert = "";
-      let classes = "alert alert-dismissible fade show";
-      if (message.error) {
-        classes += " alert-danger";
-        type = "Error";
-        alert = message.error;
-      } else if (message.info) {
-        classes += " alert-info";
-        type = "Info";
-        alert = message.info;
-      }
-      return (
-        <div className={classes} role="alert">
-          <strong>{type}:</strong> {alert}
-          <button
-            type="button"
-            className="close"
-            data-dismiss="alert"
-            aria-label="Close"
-            onClick={this.props.onDelMessage}
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      );
-    };
+export function mapStateToProps(state) {
+  return {message: state.message};
+}
 
-    return <div className="container">{message && <Alert/>}</div>;
+export function mapDispatchToProps(dispatch) {
+  return {
+    onCleanMessage: () => dispatch(setMessage(null))
   }
 }
 
 export default connect(
-  state => ({message: state.message}),
-  dispatch => ({onDelMessage: () => dispatch(delMessage())})
+   mapStateToProps, mapDispatchToProps
 )(Message);
