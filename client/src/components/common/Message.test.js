@@ -1,27 +1,44 @@
-import React from "react";
-import * as Adapter from 'enzyme-adapter-react-16';
-import {render} from "enzyme";
-import {Message} from "./Message";
+import React from 'react';
+import {shallow} from 'enzyme';
+import {Message, mapDispatchToProps, mapStateToProps} from './Message';
 
 
-describe("Message", () => {
-  let component;
+describe('Message', () => {
+  const props = {
+    message: {type: 'error', message: "error message"},
+    onCleanMessage: jest.fn()
+  };
+  const message = shallow(<Message {...props}/>);
 
-  it("Make sure that Message will display with error parameter", () => {
-    component = render(<Message message={{error: "message"}} onDelMessage={jest.fn()} />);
-    expect(component.find("strong").length).toBe(1);
-    expect(component.find("button").length).toBe(1);
+
+  it('should render properly', function () {
+    expect(message).toMatchSnapshot();
   });
 
-  it("Make sure that Message will display with info parameter", () => {
-    component = render(<Message message={{info: "message"}} onDelMessage={jest.fn()} />);
-    expect(component.find("strong").length).toBe(1);
-    expect(component.find("button").length).toBe(1);
+  it('should contains type of the message', function () {
+    expect(message.text()).toContain(props.message.type);
   });
 
-  it("Make sure that Message will not display with if message is null", () => {
-    component = render(<Message message={null} onDelMessage={jest.fn()} />);
-    expect(component.find("strong").length).toBe(0);
-    expect(component.find("button").length).toBe(0);
+  it('should contains message text', function () {
+    expect(message.text()).toContain(props.message.message);
+  });
+
+  it('should map state to props', function () {
+    const state = {
+      message: null,
+      other: []
+    };
+    expect(mapStateToProps(state)).toMatchObject({message: null})
+  });
+
+  it('should map dispatch to props', function () {
+    const dispatch = jest.fn();
+    const result = mapDispatchToProps(dispatch);
+    expect(result).toHaveProperty('onCleanMessage');
+  });
+
+  it('should call on clean message', function () {
+    message.find('button').simulate('click');
+    expect(props.onCleanMessage).toHaveBeenCalled();
   });
 });
