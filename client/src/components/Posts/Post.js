@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {getPost, setPost} from "../../actions";
 import {formatDate} from "../../utils/tools";
 import ImageView from "../common/ImageView";
-import ContactSeller from "../posts/ContactSeller";
+import ContactSeller from "./ContactSeller";
 
 
 class Post extends Component {
