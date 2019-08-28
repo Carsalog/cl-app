@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import PropTypes from 'prop-types';
 import PostItem from './PostItem';
 
-const DisplayPosts = ({posts, onView, onEdit, onDelete}) => (
+export const DisplayPosts = ({posts, onView, onEdit, onDelete}) => (
   <React.Fragment>
     {posts.length === 0 && (
       <div className="col-12">
