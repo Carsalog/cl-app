@@ -25,7 +25,7 @@ describe('errorsHandlers', () => {
   it('should add message to the store', function () {
     action = {
       type: types.SET_MESSAGE,
-      payload: {error: "test error message"}
+      payload: {type: 'error', message: "test error message"}
     };
     errorHandler.handleError(state.config.messages.connection);
     expect(mockStore.getActions()).toMatchObject([action]);
@@ -35,7 +35,10 @@ describe('errorsHandlers', () => {
     const err = {data: {error: "test server error message"}};
     action = {
       type: types.SET_MESSAGE,
-      payload: err.data
+      payload: {
+        type: 'error',
+        message: err.data.error
+      }
     };
 
     errorHandler.handleServerMessage(err);
