@@ -6,18 +6,16 @@ import {setMessage} from '../../actions';
 export class Message extends Component {
 
   render() {
-
+    const {message, onCleanMessage} = this.props;
     return (
       <div className="container">
-        {this.props.message && (
-          <div className={`alert alert-${this.props.message.type} alert-dismissible fade show mt-5`} role="alert">
-            <strong>{this.props.message.type}</strong> {this.props.message.message}
-            <button type="button"
-                    className="close"
-                    data-dismiss="alert"
-                    aria-label="Close" onClick={this.props.onCleanMessage}>
-              <span aria-hidden="true">&times;</span>
-            </button>
+        {message && (
+          <div className={`message message__border--${message.type}`}>
+            <span className={`message__button message__button--${message.type}`}
+                  onClick={onCleanMessage} />
+            <p className={`message__text--${message.type}`}>
+              {message.message}
+            </p>
           </div>
         )}
       </div>
