@@ -1,0 +1,59 @@
+.home {
+  margin-bottom: 7rem;
+
+  &__flexbox {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 60vh;
+  }
+
+  &__greeting {
+    width: 100%;
+    font-size: 2.2em;
+    font-weight: 300;
+    text-align: center;
+    display: block;
+  }
+
+  &__link {
+    width: 20rem;
+    color: $color-black;
+    text-align: center;
+    transition: all ease-out .5s;
+    margin: 3rem;
+    padding: 1rem 1.5rem;
+    border-radius: 2px;
+
+    &:hover, &:active {
+      transform: translateY(-1rem);
+      color: $color-gray;
+      box-shadow: 0 0.2rem 2rem rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  &__header {
+    font-size: 1.5em;
+    font-weight: 400;
+  }
+
+  &__icon-box {
+    display: inline-block;
+    width: 10rem;
+  }
+}
