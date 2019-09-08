@@ -1,0 +1,10 @@
+.icon {
+
+  &__social {
+    width: 4rem;
+    display: inline-block;
+    margin: .5rem;
+    transition: all .3s;
+    color: $color-nav-link;
+  }
+}
