@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import Icon from './Icon';
 
 class IconLink extends React.Component {
 
@@ -12,13 +12,14 @@ class IconLink extends React.Component {
     const {item} = this.props;
 
     return (item.active &&
-      <Link to={item.url}
-            className="soc-icon"
-            style={this.state}
-            onMouseLeave={() => this.setStyle("")}
-            onMouseEnter={() => this.setStyle(item.color)}>
-        <i className={item.class} aria-hidden="true"> </i>
-      </Link>
+      <a href={item.url}
+         className="icon__social"
+         target="_blank"
+         style={this.state}
+         onMouseLeave={() => this.setStyle("")}
+         onMouseEnter={() => this.setStyle(item.color)}>
+        <Icon icon={item.icon} view={item.view}/>
+      </a>
     );
   }
 }
