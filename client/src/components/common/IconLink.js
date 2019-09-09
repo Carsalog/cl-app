@@ -14,6 +14,7 @@ class IconLink extends React.Component {
     return (item.active &&
       <a href={item.url}
          className="icon__social"
+         rel="nofollow noopener noreferrer"
          target="_blank"
          style={this.state}
          onMouseLeave={() => this.setStyle("")}
