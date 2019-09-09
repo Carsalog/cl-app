@@ -1,3 +1,5 @@
+import React from "react";
+
 const conf = {
   base: "http://127.0.0.1:5000",
   api: "http://127.0.0.1:5000/api",
@@ -120,6 +122,58 @@ const conf = {
   model: null,
   state: null,
   city: null,
+  footer: {
+    follow: {header: "Follow us"},
+    resources: {
+      header: "resources",
+      links: [
+        {
+          title: "Research",
+          url: "/pages/research"
+        },
+        {
+          title: "Contact as",
+          url: "/pages/contact"
+        },
+        {
+          title: "Costumer support",
+          url: "/pages/support"
+        },
+        {
+          title: "Partnership",
+          url: "/pages/partnership"
+        }
+      ]
+    },
+    about: {
+      header: "about as",
+      links: [
+        {
+          title: "Company",
+          url: "/pages/company"
+        },
+        {
+          title: "Careers",
+          url: "/careers"
+        },
+        {
+          title: "Leadership",
+          url: "/pages/leadership"
+        },
+        {
+          title: "Privacy Policy",
+          url: "/pages/policy"
+        }
+      ]
+    },
+    copyright: {
+      text: "© 2018 Copyright",
+      link: {
+        title: "Carsalog &reg;",
+        url: "/"
+      }
+    }
+  },
   pages: {
     home: {
       greeting: "Start here!",
