@@ -1,58 +1,52 @@
-import React from 'react';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
+import RenderList from './RenderList';
 import Social from './Social';
 
 
-const Footer = () => (
-  <footer className="page-footer font-small bg-light pt-4 mt-4">
-    <div className="container-fluid text-center text-md-left">
-      <div className="row">
-        <div className="col-md-6 mt-md-0 mt-3">
-          <h5 className="text-uppercase">Follow us</h5>
-          <Social />
-        </div>
-        <hr className="clearfix w-100 d-md-none pb-3"/>
-        <div className="col-md-3 mb-md-0 mb-3">
-          <h5 className="text-uppercase">Links</h5>
-          <ul className="list-unstyled decoration-none">
-            <li>
-              <Link to="#" className="link-gray">Link 1</Link>
-            </li>
-            <li>
-              <Link to="#" className="link-gray">Link 2</Link>
-            </li>
-            <li>
-              <Link to="#" className="link-gray">Link 3</Link>
-            </li>
-            <li>
-              <Link to="#" className="link-gray">Link 4</Link>
-            </li>
-          </ul>
-        </div>
-        <div className="col-md-3 mb-md-0 mb-3">
-          <h5 className="text-uppercase">Links</h5>
-          <ul className="list-unstyled decoration-none">
-            <li>
-              <Link to="#" className="link-gray">Link 1</Link>
-            </li>
-            <li>
-              <Link to="#" className="link-gray">Link 2</Link>
-            </li>
-            <li>
-              <Link to="#" className="link-gray">Link 3</Link>
-            </li>
-            <li>
-              <Link to="#" className="link-gray">Link 4</Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div className="footer-copyright text-center py-3">
-      <span className="text-muted">© 2018 Copyright: </span>
-      <Link to="/" className="link-gray decoration-none">carsalog.com</Link>
-    </div>
-  </footer>
-);
+export function mapStateToProps(state) {
+  return {
+    follow: state.config.footer.follow,
+    resources: state.config.footer.resources,
+    about: state.config.footer.about,
+    copyright: state.config.footer.copyright
+  };
+}
 
-export default Footer;
+export class Footer extends Component {
+  render() {
+    return (
+      <footer className="footer">
+        <div className="footer__block container">
+          <div className="footer__flexbox">
+            <div className="footer__unit footer__unit--icons">
+              <h5 className="footer__icons-header">{this.props.follow.header}</h5>
+              <div className="footer__wrapper">
+                <Social />
+              </div>
+            </div>
+            <div className="footer__unit">
+              <RenderList {...this.props.resources}/>
+            </div>
+            <div className="footer__unit">
+              <RenderList {...this.props.about}/>
+            </div>
+          </div>
+        </div>
+        <div className="container">
+          <div className="footer__copyright">
+            <span className="footer__copyright-text">{this.props.copyright.text}</span>
+            <Link
+              to={this.props.copyright.link.url}
+              className="footer__copyright-link">{this.props.copyright.link.title}</Link>
+          </div>
+        </div>
+      </footer>
+    );
+  }
+}
+
+export default connect(
+  mapStateToProps,
+)(Footer);
