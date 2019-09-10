@@ -1,8 +1,8 @@
 import React from 'react';
-import {connect} from "react-redux";
-import PlaceInterface from "../common/PlaceInterface";
-import {getStates} from "../../actions";
-import {placeSchema} from "../common/schemas";
+import {connect} from 'react-redux';
+import PlaceInterface from '../common/PlaceInterface';
+import {getStates, getState, setCities} from '../../actions';
+import {placeSchema} from '../common/schemas';
 
 
 export class RightSite extends PlaceInterface {
@@ -12,7 +12,7 @@ export class RightSite extends PlaceInterface {
     super(props);
 
     this.state = {
-      data: {state: "", city: ""},
+      data: {state: '', city: ''},
       errors: {}
     };
 
@@ -23,14 +23,13 @@ export class RightSite extends PlaceInterface {
 
     const {state, city, states, urls} = this.props;
     const data = {...this.state.data};
-
-    if (Object.keys(state).length) {
+    if (state) {
       data.state = state._id;
-      this.setState({data});
-    }
-
-    if (Object.keys(state).length && Object.keys(city).length) {
-      data.city = city._id;
+      getState(`/states/${state._id}`).then(res => {
+        if (res && res.data)
+          return this.props.onSetCities(res.data.cities);
+      });
+      if (city) data.city = city._id;
       this.setState({data});
     }
 
@@ -40,14 +39,16 @@ export class RightSite extends PlaceInterface {
   doSubmit = () => this.props.history.push(this.props.urls.posts);
 
 
-  render () {
+  render() {
 
     return (
       <form onSubmit={this.handleSubmit}>
-        <h1 className="modal-header h3 text-muted flex-center">State and city</h1>
+        <h1 className="base__header">State and city</h1>
         {this.renderStates()}
         {this.renderCities()}
-        {this.renderButton("submit")}
+        <div className="form__btn-container">
+          {this.renderButton('submit')}
+        </div>
       </form>
     );
   }
@@ -65,7 +66,8 @@ export function mapStateToProps(state) {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onGetStates: url => dispatch(getStates(url))
+    onGetStates: url => dispatch(getStates(url)),
+    onSetCities: cities => dispatch(setCities(cities))
   }
 }
 
