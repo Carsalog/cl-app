@@ -5,14 +5,17 @@ import {Nav} from './Nav';
 
 describe("Nav", () => {
 
-  const nav = shallow(<Nav />);
+  const props = {
+    history: { location: { pathname: '/'} }
+  };
+  const nav = shallow(<Nav {...props}/>);
 
   it('should render properly', function () {
     expect(nav).toMatchSnapshot();
   });
 
   it("checks that Nav contains logo", () => {
-    expect(nav.find('#logo').length).toBe(1);
+    expect(nav.find('Connect(Logo)').exists()).toBe(true);
   });
 
   it("checks that Nav contains UserNav component", () => {
@@ -20,9 +23,11 @@ describe("Nav", () => {
       .exists()).toBe(true);
   });
 
-  it('should set opposite value', function () {
-    expect(nav.instance().state.navBar).toBe(true);
-    nav.instance().handleNavBar();
-    expect(nav.instance().state.navBar).toBe(false);
+  it('should contains hamburger menu', function () {
+    expect(nav.find('.nav__burger').exists()).toBe(true);
+  });
+
+  it('should contains a checkbox', function () {
+    expect(nav.find('.nav__checkbox').exists()).toBe(true);
   });
 });
