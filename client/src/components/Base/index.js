@@ -4,13 +4,13 @@ import RightSite from './RightSite';
 
 
 const Base = props => (
-  <main className="container page-height">
-    <div className="row pt-5">
-      <div className="col-md-5 col-lg-5">
-        <LeftSite/>
+  <main className="container">
+    <div className="base">
+      <div className="base__left"><LeftSite /></div>
+      <div className="base__center" id="or">
+        <div className="base__header">or</div>
       </div>
-      <div className="col-2 flex-center h1 text-muted" id="or">or</div>
-      <div className="col-md-5 col-lg-5">
+      <div className="base__right">
         <RightSite history={props.history}/>
       </div>
     </div>

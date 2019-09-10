@@ -26,7 +26,10 @@ describe('ZipCard', () => {
 
   it('should call renderLink', function () {
     expect(props.renderLink)
-      .toHaveBeenCalledWith("confirm",
-        "/posts", props.zipConfirm)
+      .toHaveBeenCalledWith(
+        "confirm",
+        "/posts",
+        props.zipConfirm,
+        "zip__link zip__link--confirm")
   });
 });

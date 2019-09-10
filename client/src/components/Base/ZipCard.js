@@ -1,17 +1,18 @@
 import React from 'react';
 
-
-export const ZipCard = ({zip, zipMsg, renderLink, zipConfirm}) => (
-  <div className="card border-info mt-5" style={{width: "100%"}}>
-    <div className="card-body">
-      <h5 className="card-title">Show cars in:</h5>
-      <h6 className="card-subtitle mb-2 text-muted">
-        <span>{zip._id} </span>
-        <span className="text-capitalize">{zip.city.name}, </span>
-        <span>{zip.state.abbreviation}</span>
-      </h6>
-      <p className="card-text">{zipMsg}</p>
-      {renderLink("confirm", "/posts", zipConfirm)}
+export const ZipCard = ({zip, zipMsg, renderLink, zipConfirm, resetZip}) => (
+  <div className="zip__card">
+    <div className="zip__card-body">
+      <div className="zip__card-address">
+        <span className="zip__card-code">{zip._id} </span>
+        <span className="zip__card-city">{zip.city.name}, </span>
+        <span className="zip__card-state">{zip.state.abbreviation}</span>
+      </div>
+      <p className="zip__card-text">{zipMsg}</p>
+      <div className="zip__link-box">
+        <div className="zip__link zip__link--cancel" onClick={resetZip}>cancel</div>
+        {renderLink("confirm", "/posts", zipConfirm, "zip__link zip__link--confirm")}
+      </div>
     </div>
   </div>
 );
