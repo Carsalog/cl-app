@@ -7,8 +7,8 @@ import {getStates} from "../../actions";
 describe('RightSide', () => {
 
   const props = {
-    state: {},
-    city: {},
+    state: null,
+    city: null,
     states: [],
     cities: [],
     urls: {
@@ -18,7 +18,8 @@ describe('RightSide', () => {
     history: {
       push: jest.fn()
     },
-    onGetStates: jest.fn()
+    onGetStates: jest.fn(),
+    onSetZip: jest.fn()
   };
   const dispatch = jest.fn();
   const rightSite = shallow(<RightSite {...props}/>);

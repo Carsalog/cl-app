@@ -1,8 +1,8 @@
 import React from "react";
 import {shallow} from "enzyme";
-import Base from "./Base";
-import LeftSide from "./base/LeftSite";
-import RightSite from "./base/RightSite";
+import Base from "./index";
+import LeftSide from "./LeftSite";
+import RightSite from "./RightSite";
 
 
 describe("Test for Base component", () => {

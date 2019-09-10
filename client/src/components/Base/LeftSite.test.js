@@ -4,19 +4,21 @@ import {LeftSite} from './LeftSite';
 
 
 describe('LeftSite', () => {
-
+  const urls = {zips: '/zips/test/url'};
   const props = {
     confirms: {
       zip: null
     },
     zip: null,
     config: {
-      urls: {zips: '/zips/test/url'},
+      urls,
       messages: {
         zipMsg: 'test zip message'
       }
     },
+    urls,
     onGetZip: jest.fn(),
+    onSetZip: jest.fn(),
     onUpdateZipConfirm: jest.fn()
   };
   const leftSite = shallow(<LeftSite {...props}/>);
@@ -75,5 +77,4 @@ describe('LeftSite', () => {
         .toBe(true);
     });
   });
-
 });
