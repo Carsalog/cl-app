@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {Route, Switch} from "react-router-dom";
-import Vin from './posts/Vin';
-import NewPostBody from './posts/NewPostBody';
-import EditMyPost from './posts/EditMyPost';
-import RemovePost from './posts/RemovePost';
-import NewPostFinal from './posts/NewPostFinal';
-import PostsList from './posts/PostsList';
-import Post from "./posts/Post";
-import ProtectedRoute from "./common/ProtectedRoute";
+import Vin from './Vin';
+import NewPostBody from './NewPostBody';
+import EditMyPost from './EditMyPost';
+import RemovePost from './RemovePost';
+import NewPostFinal from './NewPostFinal';
+import PostsList from './PostsList';
+import Post from "./Post";
+import ProtectedRoute from "../common/ProtectedRoute";
 
 
 export class Posts extends Component {
