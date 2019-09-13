@@ -15,15 +15,15 @@ describe("Tests for App", () => {
   });
 
   it("checks that App contains Nav component", () => {
-    expect(app.find('Nav').exists()).toBe(true);
+    expect(app.find('Header').exists()).toBe(true);
   });
 
   it("checks that App contains Footer component", () => {
-    expect(app.find('Footer').exists()).toBe(true);
+    expect(app.find('Connect(Footer)').exists()).toBe(true);
   });
 
-  it("checks that App contains Switch component", () => {
-    expect(app.find('Router').exists()).toBe(true);
+  it("checks that App contains Router component", () => {
+    expect(app.find('Connect(Router)').exists()).toBe(true);
   });
 
   it("checks that App contains Message component", () => {
