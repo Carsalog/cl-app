@@ -43,8 +43,7 @@ class Google extends Component {
     if (!gapi) return history.replace("/");
 
     gapi.client.setApiKey(google.apiKey);
-    gapi.client.load('plus', 'v1', function () {
-    });
+    gapi.client.load('plus', 'v1', () => {});
 
     const params = {...google};
     params.callback = this.callback;
@@ -55,7 +54,7 @@ class Google extends Component {
   render() {
     return (
       <div className="container page-height">
-        <div className="dark-background"></div>
+        <div className="dark-background" />
       </div>
     );
   }

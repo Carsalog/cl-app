@@ -5,16 +5,16 @@ import {
   getStates,
   getTransmissions,
   getUsersPosts,
-  setMessage,
   setPost,
   setState,
   setCities,
-  getState} from "../../actions";
+  getState
+} from "../../actions";
 
-import DisplayPosts from "../common/DisplayPosts";
+import DisplayPosts from "../Posts/DisplayPosts";
 
 
-class MyPosts extends Component {
+export class MyPosts extends Component {
 
 
   componentDidMount() {
@@ -54,13 +54,11 @@ class MyPosts extends Component {
 
   render() {
     const {myPosts} = this.props;
-    return (
-      <DisplayPosts
-        posts={myPosts}
-        onView={this.handleView}
-        onEdit={this.handleEdit}
-        onDelete={this.handleDelete} />
-    );
+    return <DisplayPosts
+      posts={myPosts}
+      onView={this.handleView}
+      onEdit={this.handleEdit}
+      onDelete={this.handleDelete}/>;
   }
 }
 
@@ -79,7 +77,6 @@ export default connect(
   dispatch => ({
     onGetUsersPosts: url => dispatch(getUsersPosts(url)),
     onGetTransmissions: url => dispatch(getTransmissions(url)),
-    onSetMessage: msg => dispatch(setMessage(msg)),
     onSetPost: post => dispatch(setPost(post)),
     onSetState: state => dispatch(setState(state)),
     onGetStates: url => dispatch(getStates(url)),

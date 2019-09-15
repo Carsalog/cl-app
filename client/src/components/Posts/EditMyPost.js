@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import PostInterface from "../common/PostInterface";
-import {addTag, setMessage, setPost, setMyPosts} from ".././../actions";
+import {addTag, setMessage, setPost, setMyPosts} from "../../actions";
 import {postSchema} from "../common/schemas";
 import http from "../../services/http";
 import Tags from "../common/Tags";

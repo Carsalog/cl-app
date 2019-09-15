@@ -87,7 +87,7 @@ test("model", () => {
 
 test("state", () => {
 
-  expect(state(undefined, {type: null})).toEqual({});
+  expect(state(undefined, {type: null})).toEqual(null);
 
   expect(state({_id: 1}, {type: null})).toEqual({_id: 1});
 
@@ -97,7 +97,7 @@ test("state", () => {
 
 
 test("city", () => {
-  expect(city(undefined, {type: null})).toEqual({});
+  expect(city(undefined, {type: null})).toEqual(null);
 
   expect(city({_id: 1}, {type: null})).toEqual({_id: 1});
 
