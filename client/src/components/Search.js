@@ -13,10 +13,13 @@ class Search extends Component {
 
 
   componentDidMount() {
+    console.log(this.props);
 
-    const queryLength = this.state.query.length > 0;
-    this.props.history.push("/search");
-    if (queryLength) http.get(`/search${this.state.query}`).then(res => {
+    const {query} = this.state;
+
+    const queryTest = query.startsWith('?q=') && query.length > 4;
+
+    if (queryTest) http.get(`/search${this.state.query}`).then(res => {
       if (res && res.data) this.setState({results: res.data});
     });
   }
