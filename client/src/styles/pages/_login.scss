@@ -1,0 +1,33 @@
+.login {
+  padding: 7rem 1rem 10rem;
+  min-height: 60vh;
+
+  &__container {
+    padding: 3rem 3.5rem;
+    max-width: 48rem;
+    margin: 0 auto;
+    box-shadow: 0 0.2rem 2rem rgba(0, 0, 0, 0.15);
+  }
+
+  &__hr {
+    margin: 1rem 0;
+    border: solid 1px $color-hr;
+  }
+
+  &__header {
+    font-size: 1.4em;
+    font-weight: 600;
+    text-align: center;
+    margin: 2rem 0 2.5rem;
+  }
+
+  &__link {
+    text-align: center;
+    font-size: .85em;
+    font-weight: 600;
+  }
+
+  &__button {
+    padding: 1rem 0;
+  }
+}
