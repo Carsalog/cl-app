@@ -17,23 +17,42 @@
     font-size: 1em;
   }
 
+  @include mq(mobile-lg) {
+    display: block;
+  }
+
   &__checkbox {
     display: none;
   }
 
-  &__logo {
+  &__toggle {
+
+  }
+
+  &__wrapper {
+    display: -ms-flexbox;
+    display: -webkit-flex;
     display: flex;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
     align-items: center;
-    width: 125px;
+    height: 100%;
+  }
+
+  &__logo-block {
+    width: fit-content;
+    height: 100%;
+  }
+
+  &__logo {
+    display: block;
+    height: fit-content;
+    width: 9rem;
     z-index: 10;
-
-    &--upper {
-      color: $color-logo-upper;
-    }
-
-    &--body {
-      color: $color-logo-body;
-    }
+    color: $color-nav-link;
   }
 
   &__menu {
@@ -43,14 +62,16 @@
     flex: 1;
     opacity: 1;
     list-style: none;
-    z-index: 10;
-    transition: opacity 400ms;
-    transition-delay: 400ms;
+    z-index: 100;
+    transition: opacity 350ms;
+    transition-delay: 350ms;
     transition-property: opacity;
+    position: relative;
 
     & > li {
       display: inline-block;
       box-sizing: content-box;
+      z-index: 120;
 
       @include mq(mobile-lg) {
         display: block;
@@ -67,8 +88,19 @@
     padding: 1rem;
     display: block;
     color: $color-nav-link;
+    z-index: 150;
+    font-size: .85em;
+    font-weight: 600;
+    
     &:hover {
       color: $color-nav-link-hover;
+    }
+
+
+
+    @include mq(mobile-lg) {
+      font-size: 1.2em;
+      font-weight: 600;
     }
   }
 
@@ -110,7 +142,7 @@
     height: 3rem;
     width: 3rem;
     position: absolute;
-    top: -.3rem;
+    top: 1rem;
     right: 1rem;
     border-radius: 50%;
     z-index: 120;
@@ -129,11 +161,17 @@
     top: 0;
     right: .2rem;
     background-color: rgba($color-white, .5);
-    z-index: 2;
-    transition: all .7s cubic-bezier(.61, .43, .16, 1.31), box-shadow .4s;
+    z-index: 5;
     box-shadow: 0 0.2rem 2rem rgba(0, 0, 0, 0.15);
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
+    
+    &-transparent {
+      z-index: 4;
+      background: transparent;
+      width: 0;
+      height: auto;
+    }
   }
 
   // animation
@@ -141,6 +179,13 @@
     &__checkbox:checked ~ &__background {
       height: 25rem;
       background-color: rgba($color-white, .96);
+    }
+
+    &__checkbox:checked ~ &__background-transparent {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 100%;
     }
 
     &__checkbox:checked ~ &__menu {
@@ -161,7 +206,6 @@
   // animated icon
   &__burger {
     position: relative;
-    margin-top: 3rem;
     transition: all .3s;
 
     &,
