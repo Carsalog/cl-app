@@ -13,7 +13,7 @@ export function mapStateToProps(state) {
 export class Logo extends Component {
   render() {
     return (
-      <Link className="nav__logo" to={this.props.www}>
+      <Link className="nav__logo" to={this.props.www} onClick={this.props.closeMenu}>
         <Icon {...this.props.logo} />
       </Link>
     );
