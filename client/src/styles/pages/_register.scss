@@ -1,0 +1,29 @@
+.register {
+  padding: 7rem 1rem 10rem;
+  min-height: 60vh;
+
+  &__container {
+    padding: 3rem 3.5rem;
+    display: block;
+    max-width: 48rem;
+    margin: 0 auto;
+    box-shadow: 0 0.2rem 2rem rgba(0, 0, 0, 0.15);
+  }
+
+  &__header {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: 600;
+    padding: 2rem 0;
+  }
+
+  &__link {
+    font-size: .8em;
+    text-align: center;
+    padding-top: 1rem;
+
+    @include mq(mobile-lg) {
+      font-size: 1em;
+    }
+  }
+}
