@@ -2,6 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import UserInterface from "../common/UserInterface";
 import {register} from "../../services/user";
+import {setMessage} from '../../actions';
 import auth from "../../services/auth";
 
 
@@ -39,20 +40,28 @@ export class Register extends UserInterface {
 
 
   handleResponse = res => {
-    if (res && res.data) {
-      if (this.props.user) {
-        auth.retrieveUser(res.data.token);
-        this.props.history.replace(this.props.path.profile)
-      }
-      else this.props.history.replace(this.props.path.login)
+    const {user, history, path, onSetMessage, info} = this.props;
+    if (user) {
+      auth.retrieveUser(res.data.token);
+      history.replace(path.profile);
+    } else {
+      onSetMessage({type: 'info', message: info._1});
+      history.replace(path.login);
     }
   };
 
+  onFailure = () => {
+    const {onSetMessage, errors} = this.props;
+    onSetMessage({type: 'error', message: errors._1});
+  };
 
   doSubmit = () => {
     const data = {...this.state.data};
     delete data.passwordConf;
-    register(data).then(res => this.handleResponse(res))
+    register(data).then(res => {
+      if (!res || !res.data) this.onFailure();
+      else this.handleResponse(res);
+    })
   };
 
 
@@ -102,10 +111,18 @@ export function mapStateToProps(state) {
     user: state.user,
     messages: state.config.messages,
     text: state.config.pages.register,
-    path: state.config.path
+    path: state.config.path,
+    errors: state.config.register.errors,
+    info: state.config.register.info
   }
 }
 
+export function mapDispatchToProps(dispatch) {
+  return {
+    onSetMessage: msg => dispatch(setMessage(msg))
+  };
+}
+
 export default connect(
-  mapStateToProps
+  mapStateToProps, mapDispatchToProps
 )(Register);
