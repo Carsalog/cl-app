@@ -1,9 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
-import Icons from "./common/Icons";
-import UserInterface from "./common/UserInterface";
-import {register} from "../services/user";
-import auth from "../services/auth";
+import UserInterface from "../common/UserInterface";
+import {register} from "../../services/user";
+import auth from "../../services/auth";
 
 
 export class Register extends UserInterface {
@@ -43,9 +42,9 @@ export class Register extends UserInterface {
     if (res && res.data) {
       if (this.props.user) {
         auth.retrieveUser(res.data.token);
-        this.props.history.replace("/profile")
+        this.props.history.replace(this.props.path.profile)
       }
-      else this.props.history.replace("/login")
+      else this.props.history.replace(this.props.path.login)
     }
   };
 
@@ -59,30 +58,38 @@ export class Register extends UserInterface {
 
   render() {
 
+    const {text, path} = this.props;
+
     return (
-      <div className="container page-hight">
-        <div className="row justify-content-md-center">
-          <form onSubmit={this.handleSubmit} className="col-sm-12 col-md-8 col-lg-5">
-          <h1 className="h3">Sign up</h1>
+      <div className="register">
+        <div className="register__container">
+          <form onSubmit={this.handleSubmit} className="form">
+          <h1 className="register__header">{text.header}</h1>
+          <div className="form__group">
+            {this.renderInput(text.email, text.email, null, true, this.handleEmail)}
+          </div>
+          <div className="form__group">
+            {this.renderInput(text.firstName.name, text.firstName.label)}
+          </div>
+          <div className="form__group">
+            {this.renderInput(text.lastName.name, text.lastName.label)}
+          </div>
+          <div className="form__group">
+            {this.renderInput(text.phone.name, text.phone.label)}
+          </div>
+          <div className="form__group">
+            {this.renderInput(text.password.name, text.password.label, text.password.type)}
+          </div>
+          <div className="form__group">
+            {this.renderInput(text.passwordConf.name, text.passwordConf.label, text.passwordConf.type)}
+          </div>
+          <div className="form__group">
+            {this.renderButton(text.button)}
+          </div>
           <hr/>
-          {this.renderInput("email", "Email", "text", true, this.handleEmail)}
-          {this.renderInput("firstName", "First name")}
-          {this.renderInput("lastName", "Last name")}
-          {this.renderInput("phone", "Phone number")}
-          {this.renderInput("password", "Password", "password")}
-          {this.renderInput("passwordConf", "Confirm password", "password")}
-          {this.renderButton("Sign up")}
-          <hr/>
-          <span className="h4 w100 flex-center text-muted">or</span>
-          <hr/>
-          <span className="col-6 d-inline-block">
-            <div className="flex-center">
-              {this.renderLink("sign in", "/login")}
-            </div>
-          </span>
-          <span className="col-6 d-inline-block">
-            <Icons classes="link-gray mr-3 h4"/>
-          </span>
+          <div className="register__link">
+            {this.renderLink(text.link, path.login)}
+          </div>
         </form>
         </div>
       </div>
@@ -90,9 +97,15 @@ export class Register extends UserInterface {
   }
 }
 
-export default connect(
-  state => ({
+export function mapStateToProps(state) {
+  return {
     user: state.user,
-    messages: state.config.messages
-  })
+    messages: state.config.messages,
+    text: state.config.pages.register,
+    path: state.config.path
+  }
+}
+
+export default connect(
+  mapStateToProps
 )(Register);
