@@ -1,0 +1,156 @@
+.posts {
+  min-height: 60vh;
+
+  &__body {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+
+  &__box {
+    padding: 1rem;
+  }
+
+  &__sidebar {
+    width: 30%;
+    padding: 1rem;
+
+    @include mq(mobile-lg) {
+      width: 100%;
+    }
+  }
+
+  &__list {
+    width: 70%;
+    padding: 1rem;
+
+    @include mq(mobile-lg) {
+      width: 100%;
+    }
+  }
+
+  &__location {
+    font-size: .8em;
+    font-weight: bold;
+  }
+
+  &__city {
+    text-transform: capitalize;
+  }
+
+  &__state {
+    text-transform: uppercase;
+  }
+
+  &__error {
+    font-size: .8em;
+    font-weight: bold;
+    color: $color-info;
+  }
+
+  &__vin {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 60vh;
+    padding: 1rem;
+
+    &-container {
+      width: 48rem;
+    }
+
+    &-car-card {
+      font-size: .8em;
+
+      @include mq(mobile-lg) {
+        font-size: 1em;
+      }
+    }
+
+    &-header {
+      text-align: center;
+      padding: 2rem;
+      font-size: 1.3em;
+    }
+
+    &-tbody {
+      font-size: .85em;
+    }
+
+    &-buttons {
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+
+      &-block {
+        font-size: 1.2em;
+      }
+    }
+  }
+
+  &__list {
+    font-size: .8em;
+
+    @include mq(mobile-lg) {
+      font-size: 1em;
+    }
+
+    &-center {
+      text-align: center;
+    }
+
+    &-link {
+      cursor: pointer;
+      display: inline-block;
+      width: 2.2rem;
+      height: 2.2rem;
+      padding: .2rem;
+
+      @include mq(mobile-lg) {
+        width: 3rem;
+        height: 3rem;
+      }
+
+      &--info {
+        color: $color-info;
+      }
+
+      &--remove {
+        color: $color-error;
+      }
+    }
+
+    &-price {
+
+    }
+
+    &-text {
+      cursor: pointer;
+    }
+  }
+
+  &__textarea > textarea {
+    font-size: 1em;
+  }
+}
