@@ -1,0 +1,30 @@
+.table {
+  width: 100%;
+
+  & > thead {
+    background: $color-table-header-bg;
+    color: $color-table-header-text;
+
+    & > tr {
+      & > th {
+        padding: .5rem 1rem;
+      }
+    }
+  }
+
+  & > tbody {
+
+    & > tr {
+      &:nth-child(even) {
+        background: $color-table-row-bg;
+      }
+      &:nth-child(odd) {
+        background: $color-white;
+      }
+
+      & > td {
+        padding: .5rem 1rem;
+      }
+    }
+  }
+}
