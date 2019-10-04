@@ -26,7 +26,7 @@ describe('PostItem', () => {
   const postItem = shallow(<PostItem {...props}/>);
 
   beforeAll(() => {
-    text = postItem.find('.link-gray').text();
+    text = postItem.find('tr').text();
   });
 
   it('should render properly', function () {

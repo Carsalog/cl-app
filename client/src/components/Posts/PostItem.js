@@ -1,21 +1,20 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import ActionsList from './ActionsList';
 
 
 export const PostItem = ({post, onView, onDelete, onEdit}) => (
   <tr>
+    <td className="posts__list-price-box">
+      <span className="posts__list-price">${post.price}</span>
+    </td>
     <td>
-      <span onClick={() => onView(post._id)} className="pointer link-gray p-1">
-        {post.year} {post.make.name} {post.car.model} ${post.price}
+      <span onClick={() => onView(post._id)} className="posts__list-text">
+        {post.year} {post.make.name} {post.car.model}
       </span>
     </td>
     <td>
-      <span onClick={() => onEdit(post)} className="pointer link-blue p-1">
-        <i className="fa fa-cog" aria-hidden="true"/>
-      </span>
-      <span onClick={() => onDelete(post)} className="pointer link-red p-1">
-        <i className="fa fa-trash" aria-hidden="true"/>
-      </span>
+      <ActionsList onEdit={onEdit} onDelete={onDelete} post={post} />
     </td>
   </tr>
 );
