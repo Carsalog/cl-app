@@ -26,26 +26,15 @@ describe('PostItem', () => {
   const postItem = shallow(<PostItem {...props}/>);
 
   beforeAll(() => {
-    text = postItem.find('.link-gray').text();
+    text = postItem.find('tr').text();
   });
 
   it('should render properly', function () {
     expect(postItem).toMatchSnapshot();
   });
 
-  it('should call onView', function () {
-    postItem.find('.link-gray').simulate('click');
-    expect(props.onView).toHaveBeenCalled();
-  });
-
-  it('should call onEdit', function () {
-    postItem.find('.link-blue').simulate('click');
-    expect(props.onEdit).toHaveBeenCalled();
-  });
-
-  it('should call onDelete', function () {
-    postItem.find('.link-red').simulate('click');
-    expect(props.onDelete).toHaveBeenCalled();
+  it('should contains ActionList', function () {
+    expect(postItem.find('Connect(ActionsList)').exists()).toBe(true);
   });
 
   it('should contains year', function () {
