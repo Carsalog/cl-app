@@ -1,0 +1,78 @@
+.btn {
+  font-size: .8em;
+  background: none;
+  border-radius: 2px;
+  border: solid 1px transparent;
+  cursor: pointer;
+  color: $color-font;
+  padding: 1rem 2rem;
+  margin: 2rem;
+  transition: all ease-out .5s;
+  display: block;
+  width: fit-content;
+
+  @include mq(mobile-lg) {
+    font-size: 1em;
+  }
+
+  &:hover {
+    box-shadow: 0 0 .9rem .2rem rgba(0, 0, 0, 0.1);
+    color: $color-light-gray;
+  }
+
+  &--up {
+    text-transform: uppercase;
+  }
+
+  &__rounded {
+    border-radius: 50%;
+    padding: .5rem;
+    width: 4rem;
+    height: 4rem;
+    color: $color-button-default;
+
+
+    border: solid 1px $color-button-default;
+
+    &:hover {
+      box-shadow: none;
+      border: solid 1px $color-light-gray;
+    }
+  }
+
+  &__error {
+    color: $color-error;
+
+    &:hover {
+      color: $color-white;
+      background: $color-error;
+    }
+  }
+
+  &__warning {
+    color: $color-warning;
+
+    &:hover {
+      background: $color-warning;
+      color: $color-white;
+    }
+  }
+
+  &__info {
+    color: $color-info;
+
+    &:hover {
+      background: $color-info;
+      color: $color-white;
+    }
+  }
+
+  &--small {
+    font-size: .6em;
+    font-weight: bold;
+  }
+
+  &--big {
+    font-size: 1em;
+  }
+}
