@@ -1,10 +1,9 @@
-import React from "react";
-import {connect} from "react-redux";
-import Form from "./common/form";
-import Icons from "./common/Icons";
-import auth from "../services/auth";
-import {setMessage} from "../actions"
-import {loginSchema} from "./common/schemas";
+import React from 'react';
+import {connect} from 'react-redux';
+import Form from '../common/form';
+import auth from '../../services/auth';
+import {setMessage} from '../../actions'
+import {loginSchema} from '../common/schemas';
 
 
 export class Login extends Form {
@@ -22,66 +21,65 @@ export class Login extends Form {
 
 
   componentDidMount() {
-    if (this.props.user) {
-      this.props.onLoggedIn();
-      this.props.history.push("/");
+    const {user, history, onSetMessage, messages} = this.props;
+    if (user) {
+      onSetMessage({
+        type: 'error',
+        message: messages.loginAlready
+      });
+      history.push(this.props.path.home);
     }
   }
 
   handleLoginFail = () => {
+
     const {data} = this.state;
+
+    // Clean password
     data.password = '';
-    this.setState({
-      login: false,
-      data
-    });
+    this.setState({ login: false, data });
   };
 
+
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.state.login) {
-      const {message, user} = this.props;
-      if (message && message.error) this.handleLoginFail();
-      if (user) this.props.history.push('/profile');
-    }
+    const {user, message} = this.props;
+    if (user)
+      return this.props.history.push(this.props.path.profile);
+    if (this.state.login && message && message.type === 'error')
+      return this.handleLoginFail();
   }
 
   doSubmit = () => {
     this.setState({login: true});
     this.props.onSetMessage(null);
-    auth.login(this.state.data)
-      .then(res => auth.retrieveUser(res))
-      .catch(err => this.props.onSetMessage(err));
+    return auth.login(this.state.data)
+      .then(res => auth.retrieveUser(res));
   };
 
 
   render() {
+    const {text, path} = this.props;
     return (
-      <div className="container page-height">
-        <div className="row justify-content-md-center">
-          {this.state.login && !this.props.token && <div>Login...</div>}
-          {this.state.login && this.props.token && <div>Token received!</div>}
+      <div className="login">
+        <div className="login__container">
+          {this.state.login &&
+          <div className="loader">{text.loading}</div>}
           {!this.state.login && (
-            <form onSubmit={this.handleSubmit} className="col-sm-12 col-md-8 col-lg-5">
-              <h1 className="h3 text-muted text-center">Sign In</h1>
-              <hr/>
-              <div className="h70">
-                {this.renderInput("email", "Email", "text", true)}
+            <form onSubmit={this.handleSubmit} className="form">
+              <h1 className="login__header">{text.header}</h1>
+              <div className="form__group">
+                {this.renderInput(text.email, text.email, null, true)}
               </div>
-              <div className="h70">
-                {this.renderInput("password", "Password", "password")}
+              <div className="form__group">
+                {this.renderInput(text.password, text.password, text.password)}
               </div>
-              {this.renderButton("Sign in")}
-              <hr/>
-              <span className="h4 w100 flex-center text-muted">or</span>
-              <hr/>
-              <span className="col-6 d-inline-block">
-              <div className="flex-center">
-                {this.renderLink("sign up", "/register")}
+              <div className="login__button">
+                {this.renderButton(text.header)}
               </div>
-              </span>
-                  <span className="col-6 d-inline-block">
-                <Icons classes="link-gray mr-3 h4"/>
-              </span>
+              <hr className="login__hr"/>
+              <div className="login__link">
+                {this.renderLink(text.registerLink, path.register)}
+              </div>
             </form>
           )}
         </div>
@@ -90,15 +88,24 @@ export class Login extends Form {
   }
 }
 
-
-export default connect(
-  state => ({
+export function mapStateToProps(state) {
+  return {
     user: state.user,
     token: state.token,
-    message: state.message
-  }),
-  dispatch => ({
-    onLoggedIn: () => dispatch(setMessage({error: "You are already logged in"})),
+    message: state.message,
+    messages: state.messages,
+    path: state.config.path,
+    text: state.config.pages.login
+  }
+}
+
+export function mapDispatchToProps(dispatch) {
+  return {
     onSetMessage: msg => dispatch(setMessage(msg))
-  })
+  };
+}
+
+
+export default connect(
+  mapStateToProps, mapDispatchToProps
 )(Login);
