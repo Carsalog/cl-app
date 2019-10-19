@@ -143,6 +143,9 @@
 
     &-price {
 
+      &-box {
+        width: 8rem;
+      }
     }
 
     &-text {
@@ -152,5 +155,13 @@
 
   &__textarea > textarea {
     font-size: 1em;
+  }
+
+  &__images-container {
+
+  }
+
+  &__description {
+
   }
 }
