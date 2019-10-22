@@ -6,5 +6,24 @@
 @import "base/animations";
 @import "base/utilities";
 
+@import "layout/page";
+
+@import "components/loader";
+@import "components/form";
 @import "components/header";
 @import "components/navbar";
+@import "components/message";
+@import "components/footer";
+@import "components/icon";
+@import "components/zip_card";
+@import "components/button";
+@import "components/items-list";
+@import "components/table";
+
+@import "pages/not-found";
+@import "pages/home";
+@import "pages/base";
+@import "pages/posts";
+@import "pages/login";
+@import "pages/register";
+@import "pages/profile";
