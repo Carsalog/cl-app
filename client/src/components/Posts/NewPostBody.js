@@ -36,13 +36,13 @@ export class NewPostBody extends PlaceInterface {
 
     const data = {...this.state.data};
 
-    if (!states.length) onGetStates(`${urls.states}`);
-    if (state._id) data.state = state._id;
-    if (city._id) data.city = city._id;
+    if (!states.length) onGetStates(`${urls.states}?amount=60`);
+    if (state) data.state = state._id;
+    if (city) data.city = city._id;
     if (make) data.make = make._id;
     if (model) data.model = model._id;
 
-    this.setState({data, errors: this.state.errors});
+    this.setState({data});
   }
 
   handleAddPost = post => {
@@ -76,47 +76,48 @@ export class NewPostBody extends PlaceInterface {
     const models = make ? make.models : [];
 
     return (
-      <div className="container">
-        <form onSubmit={this.handleSubmit} className="row">
-          <div className="col-12 text-center">
+      <div className="container posts__box">
+        <form onSubmit={this.handleSubmit} className="form">
+          <div className="form__group">
             <h1 className="h4">Fill in the fields</h1>
           </div>
-          <div className="col-12 pb-4">
-            {this.renderTextarea("description", "Description", true)}
-          </div>
-          <div className="col-md-6">
-            <div className="form-group">
-              {make && <span className="input-group-text">{make.name}</span>}
+          <div className="form__flexbox">
+            <div className="form__short">
+                {make && <div className="form__dummy">{make.name}</div>}
+            </div>
+            <div className="form__short">
+              {this.renderModels(models)}
+            </div>
+            <div className="form__short">
+              {this.renderInput("mileage", "Mileage", null, true)}
+            </div>
+            <div className="form__short">
+              {this.renderInput("price", "Price")}
+            </div>
+            <div className="form__short">
+              {this.renderStates()}
+            </div>
+            <div className="form__short">
+              {this.renderCities()}
+            </div>
+            <div className="form__short">
+              {transmissions.length > 0 &&
+              this.renderSelect("transmission", "Transmission", transmissions, this.handleSelectTransmission)}
             </div>
           </div>
-          <div className="col-md-6">
-            {transmissions.length > 0 &&
-            this.renderSelect("transmission", "Transmission", transmissions, this.handleSelectTransmission)}
+
+
+          <div className="form__wrapper">
+            <h4 className="h4">Add additional information below</h4>
           </div>
-          <div className="col-md-6">
-            {this.renderModels(models)}
+          <div className="form__wrapper posts__textarea">
+            {this.renderTextarea("description", "Description")}
           </div>
-          <div className="col-md-6">
-            {this.renderInput("mileage", "Mileage")}
-          </div>
-          <div className="col-md-6">
-            {this.renderInput("price", "Price")}
-          </div>
-          <div className="col-md-6">
-            {this.renderStates()}
-          </div>
-          <div className="col-md-6">
-            {this.renderCities()}
-          </div>
-          <div className="col-12 mt-3">
-            <div className="row">
-              <div className="col-6 px-1">
-                {this.renderButton("Continue")}
-              </div>
-              <div className="col-6 px-1">
-                <button className="btn btn-danger w100" type="button"
-                        onClick={this.handleCancel}>Cancel</button>
-              </div>
+          <div className="form__flexbox">
+            <button className="btn btn__warning btn--up" type="button"
+                    onClick={this.handleCancel}>Cancel</button>
+            <div className="form__btn-margin">
+              {this.renderButton("Continue")}
             </div>
           </div>
         </form>
