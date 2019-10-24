@@ -1,5 +1,5 @@
-import http from "../services/http";
-import * as types from "./types";
+import http from '../services/http';
+import * as types from './types';
 
 
 const get = (url, dispatch, type) => http.get(url)
@@ -53,14 +53,27 @@ export const authUser = (url, credentials) => dispatch => http.post(url, credent
     } else return null;
   });
 
-export const getZip = url => dispatch => {
-  http.get(url).then(res => {
-    if (res && res.data) {
-      dispatch({type: types.GET_ZIP, payload: res.data});
-      dispatch({type: types.SET_STATE, payload: res.data.state});
-      dispatch({type: types.SET_CITY, payload: res.data.city});
-    }
-  });
+export const getZip = url => dispatch => http.get(url).then(res => {
+  if (res && res.data) {
+    dispatch({type: types.GET_ZIP, payload: res.data});
+    dispatch({type: types.SET_STATE, payload: res.data.state});
+    dispatch({type: types.SET_CITY, payload: res.data.city});
+  }
+});
+
+
+export const setZip = zip => dispatch => {
+  let city, state, zip;
+  if (zip) {
+    state = zip.state;
+    city = zip.city;
+  } else {
+    zip = city = state = null;
+  }
+
+  dispatch({type: types.GET_ZIP, payload: zip});
+  dispatch({type: types.SET_STATE, payload: state});
+  dispatch({type: types.SET_CITY, payload: city});
 };
 
 export const setCity = city => dispatch => dispatch({type: types.SET_CITY, payload: city});
