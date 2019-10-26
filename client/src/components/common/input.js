@@ -3,7 +3,7 @@ import React from "react";
 
 const Input = ({name, label, error, classes, ...rest}) => {
   return (
-    <div className="form-group">
+    <React.Fragment>
       <input
         {...rest}
         className={classes}
@@ -11,8 +11,8 @@ const Input = ({name, label, error, classes, ...rest}) => {
         id={name}
         aria-describedby={`${name}Help`}
         placeholder={label}/>
-      {error && <small id={`${name}Help`} className="form-text text-danger">{error}</small>}
-    </div>
+      {error && <small id={`${name}Help`} className="form__text form__text--error">{error}</small>}
+    </React.Fragment>
   );
 };
 
