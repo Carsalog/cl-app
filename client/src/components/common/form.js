@@ -1,10 +1,10 @@
-import React, {Component} from "react";
-import Joi from "joi-browser";
-import Input from "./input";
-import Select from "./select";
-import Textarea from "./Textarea";
-import {Link} from "react-router-dom";
-import {store} from "../../loader";
+import React, {Component} from 'react';
+import Joi from 'joi-browser';
+import Input from './input';
+import Select from './select';
+import Textarea from './Textarea';
+import {Link} from 'react-router-dom';
+import {store} from '../../loader';
 
 
 class Form extends Component {
@@ -46,7 +46,7 @@ class Form extends Component {
     const errorMessage = this.validateProperty(input);
     let value = input.value;
 
-    if (input.name === "description") {
+    if (input.name === 'description') {
       if (/[<>]+/.test(value)) errors[input.name] = this.messages.descriptionRulesError;
       value = value.replace(/[\s"']*(http[s]*:\/\/.*)[\s*"']*/, '')
     }
@@ -79,14 +79,14 @@ class Form extends Component {
 
     const {password, passwordConf} = this.state.data;
     const equal = password !== passwordConf;
-    const passwordError = input.name === "password" && passwordConf.length && equal;
-    const passwordsValid = input.name === "password" && passwordConf.length && !equal;
+    const passwordError = input.name === 'password' && passwordConf.length && equal;
+    const passwordsValid = input.name === 'password' && passwordConf.length && !equal;
 
     if (passwordError) errors.passwordConf = this.messages.pwdMatchError;
     if (passwordsValid) errors.passwordConf = undefined;
 
 
-    if (input.name === "passwordConf") {
+    if (input.name === 'passwordConf') {
       if (equal) errors.passwordConf = this.messages.pwdMatchError;
       else errors.passwordConf = undefined;
       this.setState({errors});
@@ -96,7 +96,7 @@ class Form extends Component {
   renderButton = label => <button
     disabled={this.validate()}
     type="submit"
-    className="btn btn-primary w100">{label}</button>;
+    className="form__btn">{label}</button>;
 
 
   renderSelect(name, label, options, onChange) {
@@ -115,16 +115,18 @@ class Form extends Component {
     );
   }
 
-  renderLink = (label, url, onClick = () => {}) => (<Link
+  renderLink = (label, url, onClick = () => {
+  }, classes) => (<Link
     to={url}
-    className="text-uppercase link-gray"
+    className={classes || 'form__link'}
     onClick={onClick}
     id={label}>{label}</Link>);
 
   renderInput(name, label,
-              type = "text",
+              type = 'text',
               af = false,
-              onBlur = () => {},
+              onBlur = () => {
+              },
               onChange = null,
               inputClasses = null) {
 
@@ -135,7 +137,7 @@ class Form extends Component {
     else handleChange = this.handleChange;
 
     if (inputClasses) classes = inputClasses;
-    else classes = error ? "form-control border-danger" : "form-control";
+    else classes = error ? 'form__input form__input--error' : 'form__input';
 
     return (
       <Input
