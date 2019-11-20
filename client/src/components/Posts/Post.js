@@ -10,14 +10,24 @@ import ContactSeller from "./ContactSeller";
 class Post extends Component {
 
   componentDidMount() {
-    const {post, posts, onGetPost, onSetPost, params} = this.props;
+    const {posts, myPosts, onGetPost, onSetPost, params} = this.props;
     const {urls} = this.props.config;
 
-    if (!post && !posts.length) onGetPost(`${urls.posts}/${params.id}`);
-    if (posts.length) {
-      const post = posts.find(x => x._id === params.id);
-      if (post) onSetPost(post)
-    }
+    let _post;
+
+    // Define the post
+    if (posts.length) _post = this.filterPosts(params.id, posts);
+    else if (myPosts.length) _post = this.filterPosts(params.id, myPosts);
+
+    // If the post was found, display it, else upload post from the backend
+    if (_post) onSetPost(_post);
+    else onGetPost(`${urls.posts}/${params.id}`);
+  }
+
+  filterPosts = (id, posts) => posts.filter(_ => _._id === id)[0];
+
+  componentWillUnmount() {
+    this.props.onSetPost(null);
   }
 
   render() {
@@ -120,6 +130,7 @@ export default connect(
     user: state.user,
     zip: state.zip,
     base: state.config.base,
+    myPosts: state.myPosts,
     posts: state.posts,
     post: state.post,
     makes: state.makes,
