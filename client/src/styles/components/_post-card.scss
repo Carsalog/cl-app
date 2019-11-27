@@ -1,0 +1,74 @@
+.post-card {
+  padding: 2rem 0;
+
+  &__header {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding: .5rem;
+    background: $color-post-card-header-bg;
+
+    &--price {
+      float: right;
+    }
+  }
+
+  &__flexbox {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+
+  &__image {
+    display: inline-block;
+    border-radius: 2px;
+
+    &-box {
+      width: 30%;
+      transition: opacity .5s;
+      opacity: 1;
+
+      @include mq(mobile-lg) {
+        width: 100%;
+      }
+
+      &:hover {
+        opacity: .8;
+      }
+    }
+  }
+
+  &__body {
+    padding-left: 2rem;
+    width: 30%;
+
+    @include mq(mobile-lg) {
+      width: 100%;
+      padding: 1rem 0;
+    }
+
+    &-title {
+      text-transform: uppercase;
+    }
+  }
+
+  &__description {
+    width: 40%;
+    font-size: .9em;
+
+    @include mq(mobile-lg) {
+      width: 100%;
+    }
+  }
+
+  &__link {
+
+    &:hover,
+    &:visited,
+    &:active {
+      color: $color-dark-gray;
+    }
+  }
+}
