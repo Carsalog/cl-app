@@ -1,0 +1,36 @@
+.carousel {
+
+  &__main-img {
+    padding: 1rem 0;
+  }
+
+  &__flexbox {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+
+  &__prev {
+    width: 10rem;
+    margin: .5rem;
+    opacity: 1;
+    background: transparent;
+    transition: all ease-out .7s;
+    cursor: pointer;
+    border-radius: 2px;
+
+    &:hover {
+      opacity: .8;
+      background: $color-blue;
+    }
+  }
+}
