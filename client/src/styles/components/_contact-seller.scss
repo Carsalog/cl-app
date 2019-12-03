@@ -1,0 +1,54 @@
+.contact-seller {
+
+  &__header {
+    font-weight: 600;
+    font-size: 1em;
+  }
+
+  &__show {
+    color: $color-blue;
+    cursor: pointer;
+
+    &:hover {
+      color: $color-hover-blue;
+    }
+  }
+
+  &__info-box {
+    padding: 1.5rem 1rem;
+  }
+
+  &__email {
+    display: inline-block;
+    font-size: .8em;
+
+    &-box {
+      padding-top: .5rem;
+      line-height: .8;
+    }
+
+    &-link {
+      color: $color-blue;
+
+      &:hover {
+        color: $color-hover-blue;
+      }
+    }
+  }
+
+  &__icon {
+    width: 1.2rem;
+    display: inline-block;
+    margin-right: 1rem;
+  }
+
+  &__phone {
+    font-size: .8em;
+    display: inline-block;
+
+    &-box {
+      padding-top: .5rem;
+      line-height: .8;
+    }
+  }
+}
