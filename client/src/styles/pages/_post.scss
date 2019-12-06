@@ -1,0 +1,86 @@
+.post {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+
+  &__table {
+    font-size: .9em;
+
+    @include mq(mobile-lg) {
+      font-size: 1em;
+    }
+  }
+
+
+  &__content {
+    width: 70%;
+    padding: 0 1rem;
+
+    @include mq(mobile-lg) {
+      width: 100%;
+      padding: 2rem;
+    }
+  }
+
+  &__sidebar {
+    width: 30%;
+    padding: 0 1rem;
+
+    @include mq(mobile-lg) {
+      width: 100%;
+      padding: 2rem;
+    }
+  }
+
+  &__header {
+    font-size: 1em;
+
+    &-box {
+
+    }
+
+    &--title {
+      text-transform: uppercase;
+    }
+
+    &--price {
+      margin-left: 1rem;
+    }
+  }
+
+  &__date {
+    font-size: .8em;
+    font-weight: 600;
+    color: $color-header-text;
+    float: right;
+    padding-top: .2rem;
+  }
+
+  &__description {
+    padding: 1rem 0;
+    margin: 1rem 0;
+    font-size: .9em;
+
+    @include mq(mobile-lg) {
+      font-size: 1em;
+    }
+  }
+
+  &__tags {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+}
