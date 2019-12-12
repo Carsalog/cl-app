@@ -1,42 +1,47 @@
 import React from "react";
 import {shallow} from "enzyme";
-import {store} from "../../loader";
 import {Vin} from "./Vin";
-import CarCard from "./CarCard";
 import {getCar} from "../../tests/utils";
 
 
 describe("Vin", () => {
 
-  let component, car;
+  let car = getCar();
 
-  beforeEach(() => {
+  const props = {
+    car: null,
+    base: {},
+    urls: {},
+    text: {
+      header: "test header",
+      name: "test name",
+      button: "test button"
+    }
+  };
 
-    car = getCar();
+  const vin = shallow(<Vin {...props}/>);
 
-    const state = store.getState();
-
-    component = CAR => shallow(
-      <Vin
-        car={CAR}
-        base={state.config.base}
-        urls={state.config.urls}
-        onGetCar={jest.fn()}
-        onGetTransmissions={jest.fn()}
-        onCancel={jest.fn()}
-        onGetMake={jest.fn()}
-      />);
+  it('should render properly', function () {
+    expect(vin).toMatchSnapshot();
   });
 
-  it("checks that Vin contains CarCard component", () => {
-    expect(component(car).find(CarCard).length).toBe(1);
-  });
 
   it("checks that Vin contains form element", () => {
-    expect(component(null).find("form").length).toBe(1);
+    expect(vin.find("form").exists()).toBe(true);
   });
 
   it("checks that Vin contains button element", () => {
-    expect(component(null).find("button").length).toBe(1);
+    expect(vin.find("button").exists()).toBe(true);
+  });
+
+  describe('if car exists', () => {
+
+    props.car = car;
+
+    const wrapper = shallow(<Vin {...props}/>);
+
+    it("display CarCard component", () => {
+      expect(wrapper.find('CarCard').exists()).toBe(true);
+    });
   });
 });
