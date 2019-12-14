@@ -37,6 +37,8 @@ describe("Vin", () => {
   describe('if car exists', () => {
 
     props.car = car;
+    props.onConfirm  = jest.fn();
+    props.onCancel = jest.fn();
 
     const wrapper = shallow(<Vin {...props}/>);
 
