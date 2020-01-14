@@ -9,6 +9,8 @@ const get = (url, dispatch, type) => http.get(url)
     else return null;
   });
 
+const post = (url, data) => http.post(url, data);
+
 export const updateZipConfirm = confirms => dispatch => dispatch({
   type: types.UPDATE_CONFIRMS,
   payload: confirms
@@ -40,7 +42,7 @@ export const getState = url => http.get(url);
 
 export const updatePost = (url, post) => http.patch(url, post);
 
-export const createPost = (url, data) => http.post(url, data);
+export const createPost = post;
 
 export const getUser = url => dispatch => get(url, dispatch, types.SET_USER);
 
@@ -99,3 +101,14 @@ export const setCar = car => dispatch => dispatch({type: types.SET_CAR, payload:
 export const addTag = tag => dispatch => dispatch({type: types.ADD_TAG, payload: tag});
 
 export const setMyPosts = posts => dispatch => dispatch({type: types.SET_MY_POSTS, payload: posts});
+
+export const textToUser = (url, text, sender, receiver) => {
+  const data = {
+    text,
+    sender,
+    receiver
+  };
+  return http.post(url, data);
+};
+
+export const getChats = url => dispatch => get(url, dispatch, types.GET_CHATS);
