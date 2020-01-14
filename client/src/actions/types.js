@@ -23,5 +23,6 @@ export const DEL_TOKEN = 'DEL_TOKEN';
 export const SET_USER = 'SET_USER';
 export const LOGOUT = 'LOGOUT';
 export const GET_CARS = 'GET_CARS';
+export const GET_CHATS = 'GET_CHATS';
 export const SET_CAR = 'SET_CAR';
 export const SET_TRANSMISSIONS = 'SET_TRANSMISSIONS';
