@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 
 export const CarCard = ({car, onConfirm, onCancel}) => {
   return (
-    <div>
-      <h3 className="h4 text-center mb-3">Is this your car?</h3>
-      <table className="table table-striped">
+    <div className="posts__vin-car-card">
+      <h3 className="posts__vin-header">Is this your car?</h3>
+      <table className="table">
         <thead>
         <tr>
-          <th scope="col">name</th>
-          <th scope="col">value</th>
+          <th>name</th>
+          <th>value</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody className="posts__vin-tbody">
         <tr>
           <td>VIN</td>
           <td>{car.vin}</td>
@@ -39,12 +39,12 @@ export const CarCard = ({car, onConfirm, onCancel}) => {
         </tr>
         </tbody>
       </table>
-      <div className="row mt-3">
-        <div className="col-6 px-1">
-          <button className="btn btn-success w100" onClick={onConfirm}>Yes</button>
+      <div className="posts__vin-buttons">
+        <div className="posts__vin-buttons-block">
+          <button className="btn btn__warning" onClick={onCancel}>No</button>
         </div>
-        <div className="col-6 px-1">
-          <button className="btn btn-danger w100" onClick={onCancel}>No</button>
+        <div className="posts__vin-buttons-block">
+          <button className="btn btn__info" onClick={onConfirm}>Yes</button>
         </div>
       </div>
     </div>
