@@ -18,7 +18,7 @@
   "description": "Carsalog RESTFul api",
   "dependencies": {
     "axios": "^0.19.0",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "compression": "^1.7.4",
     "config": "^3.2.2",
     "cookie-parser": "^1.4.4",
